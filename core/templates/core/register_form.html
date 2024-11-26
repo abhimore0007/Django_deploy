@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bootstrap 5 Registration Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* General Styling */
+    body, html {
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+  
+    /* Background Section */
+    .background-section {
+      background-image: url('{% static "core/imgs/register_backG.jpg" %}');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  
+    /* Dark Overlay */
+    .background-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    /* Card Styling */
+    .card {
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* Form Image Styling */
+    .form-image {
+      height: 100%;
+      width: 100%;
+      border-radius: 1rem 0 0 1rem;
+      object-fit: cover;
+      box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+  
+    /* Form Content Styling */
+    .card-body {
+      padding: 2rem;
+    }
+  
+    /* Button Styling */
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+      font-weight: bold;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    /* Top-right Button Styling */
+    .top-right-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 3;
+    }
+    .top-right-btn .btn-secondary {
+      font-weight: bold;
+      background-color: rgba(0, 0, 0, 0.6);
+      border: none;
+    }
+
+    /* Links and Text */
+    .text-center p {
+      color: #393f81;
+    }
+    .text-center a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    .text-center a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Section: Design Block -->
+  <section class="vh-100 background-section">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-8">
+          <div class="card">
+            <div class="row g-0">
+              <div class="col-md-6 col-lg-5 d-none d-md-block">
+                <img src="{% static 'core/imgs/register_img.jpg' %}" alt="register form" class="img-fluid form-image" />
+              </div>
+              <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                <div class="card-body p-4 p-lg-5 text-black">
+                  <form action="" method="POST" novalidate>
+                    <h2 class="fw-bold mb-4 text-center" style="color: #000000;">Register Form</h2>
+                    {% csrf_token %}
+                    
+                    {% if log.non_field_errors %}
+                    <div class="alert alert-danger">
+                      {% for error in log.non_field_errors %}
+                      <p>{{ error }}</p>
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if messages %}
+                    <div class="alert alert-danger">
+                      {% for message in messages %}
+                      <p>{{ message }}</p>
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    {% for reg in reg %}
+                    <div class="form-group mb-3">
+                      {{ reg }}
+                    </div>
+                    {% endfor %}
+                    
+                    <!-- Submit button -->
+                    <div class="pt-1 mb-4">
+                      <button class="btn btn-primary btn-lg btn-block w-100" type="submit">Register</button>
+                    </div>
+
+                    <!-- Additional Links -->
+                    <div class="text-center">
+                      <p class="mt-3" style="color: #393f81;">Already have an account? <a href="{% url "login" %}" style="color: #007bff;">Login here</a></p>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top-right Button -->
+    <div class="top-right-btn">
+      <a href="{% url 'base' %}">
+        <button class="btn btn-secondary">Back</button>
+      </a>
+    </div>
+  </section>
+  <!-- Section: Design Block -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,92 @@
+{% load static %}
+<style>
+    /* Wrapper settings for centering the content */
+    .wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 95vh;
+        background-color: black; /* Black background for the whole section */
+        flex-direction: column; /* Stack heading and slider vertically */
+    }
+
+    /* Styling for the heading */
+    .slider-heading {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: bolder;
+        {% comment %} margin-bottom: 20px; /* Add spacing between the heading and slider */ {% endcomment %}
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    /* Styling for the slider */
+    .slider {
+        height: 330px;
+        margin: auto;
+        overflow: hidden;
+        position: relative;
+        width: 80%;
+    }
+
+    .slider .slide-track {
+        animation: scroll 30s linear infinite;
+        display: flex;
+        width: calc(250px * 14);
+    }
+
+    .slider .slide {
+        height: 300px;
+        width: 450px;
+        margin-right: 20px; /* Add space between the slides */
+    }
+
+    .slider .slide img {
+        width: 100%; /* Full width of the slide */
+        height: 100%; /* Make images fill the height */
+        object-fit: cover; /* Make sure the images cover the space without distortion */
+        border-radius: 10px;
+        border: 2px solid #bbb;
+    }
+
+    /* Animation for the sliding effect */
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-250px * 7)); }
+    }
+</style>
+
+
+<div class="wrapper">
+    <!-- Top Center Heading -->
+    <h1 class="slider-heading">Our Logo Showcase</h1>
+    
+    <div class="slider">
+        <div class="slide-track">
+            <div class="slide">
+                <img src="{% static "core/imgs/photo1 (1).jpg" %}" alt="Logo 1">
+            </div>
+            <div class="slide">
+                <img src="{% static "core/imgs/photo2 (1).jpg" %}" alt="Logo 2">
+            </div>
+            <div class="slide">
+                <img src="{% static "core/imgs/photo3 (1).jpg" %}" alt="Logo 3">
+            </div>
+            <div class="slide">
+                <img src="{% static "core/imgs/photo4.jpg" %}" alt="Logo 4">
+            </div>
+            <div class="slide">
+                <img src="{% static "core/imgs/photo5 (1).jpg" %}" alt="Photo">
+            </div>
+            <div class="slide">
+                <img src="{% static "core/imgs/photo6 (1).jpg" %}" alt="Photo">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

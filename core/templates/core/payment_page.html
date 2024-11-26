@@ -1,0 +1,90 @@
+{% block content %}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #fff;
+    }
+    .payment-container {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 30px;
+        background-color: #1c1c1c;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+        }
+        .payment-header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: #f39c12;
+        }
+        .payment-summary {
+            margin-bottom: 30px;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+        .summary-row span {
+            font-size: 1.1rem;
+        }
+        .summary-row .price {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #f39c12;
+        }
+        .paypal-btn-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .place-order-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #f39c12;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .place-order-btn:hover {
+            background-color: #e67e22;
+        }
+        .paypal-button-container {
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            color: #777;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="payment-container">
+        
+        <!-- PayPal Integration -->
+        <div class="paypal-btn-container">
+            <h1>Payment Page</h1>
+            <!-- PayPal Button -->
+            <!-- PayPal Button code -->
+            {{paypal.render}}
+        </div>
+        <!-- Alternative Payment Method -->
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Your Company. All Rights Reserved.</p>
+    </div>
+    
+{% endblock content %}

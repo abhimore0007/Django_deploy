@@ -1,0 +1,33 @@
+{% load static %}
+<style>
+    .second-hero-img{
+        color: white;
+        padding-top: 10px;
+    }
+    
+    .second-hero-img h1{
+        font-size: 5rem;
+        color: rgb(205, 104, 33);
+    }
+    
+    .second-hero-img p{
+        font-size: 1.5rem;
+    }
+    
+    .second-hero{
+        padding-top: 90px;
+        background-color: black;
+        padding-bottom: 130px;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row align-items-center  second-hero">
+        <div class="col-md-6">
+            <img src="{% static "core/imgs/heroimg.jpg" %}" alt="Description" class="img-fluid">
+        </div>
+        <div class="col-md-6 second-hero-img">
+            <h1 id="secondHeroTitle">Why TimeZone ?</h1>
+            <p>Our luxury watches combine classic style and top-quality craftsmanship, making every moment special.</p>
+        </div>
+    </div>
+</div>

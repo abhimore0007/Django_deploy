@@ -1,0 +1,50 @@
+{% load static %}
+
+<style>
+    .video-section {
+        background-color: black; /* Set background color to black */
+        padding: 20px 0; /* Add some vertical padding */
+      }
+      
+      .video-section video {
+        width: 99%; /* Ensure the video takes full width */
+        height: auto; /* Maintain aspect ratio */
+      }
+      
+      
+      .video-section {
+        position: relative;
+        overflow: hidden;
+      }
+      .video-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white; /* Text color */
+        text-align: center;
+        z-index: 2; /* Ensure text is above video */
+      }
+      
+
+
+
+</style>
+
+
+
+
+<div id="videoCarousel" class="carousel slide video-section bg-black py-4" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="embed-responsive embed-responsive-16by9">
+                <video class="embed-responsive-item" autoplay muted loop>
+                    <source src="{% static "core/imgs/Cinematic Watch Product Video Commercial Example _ Rolex Timex Omega Samsung Apple Jewelry Amazon Ad.mp4" %}" type="video/mp4">
+                </video>
+                <div class="video-text">
+                    <h2>Discover Timeless Elegance in Our Luxury Watch Collection.</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

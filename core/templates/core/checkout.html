@@ -1,0 +1,119 @@
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #fff;
+    }
+    .checkout-container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #1c1c1c;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+        }
+        .summary-card {
+            background-color: #2a2a2a;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .address-card {
+            padding: 15px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            background-color: #2a2a2a;
+        }
+        .address-radio {
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .checkout-summary {
+            border-top: 1px solid #444;
+            padding-top: 20px;
+        }
+        .place-order-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #f39c12;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .place-order-btn:hover {
+            background-color: #e67e22;
+        }
+        .cart-summary h5,
+        .address-selection h5 {
+            color: #f39c12;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+        .summary-row span {
+            font-size: 1rem;
+        }
+        hr {
+            border-color: #444;
+        }
+    </style>
+<body>
+    <div class="checkout-container">
+        <h2 class="text-center mb-4">Checkout</h2>
+        
+        <!-- Cart Summary -->
+        <div class="cart-summary mb-4">
+            <h5>Order Summary</h5>
+            <div class="summary-card">
+                <div class="summary-row">
+                    <span>Total:</span>
+                    <span class="cart-total">&#8377; {{ total }}</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span class="shipping-cost">&#8377; 3000</span>
+                </div>
+                <hr>
+                <div class="summary-row">
+                    <span>Grand Total:</span>
+                    <span class="grand-total">&#8377; {{ final_price }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Address Selection -->
+        <div class="address-selection mb-4">
+            <h5>Select Address</h5>
+            <form action="" checked>
+                {% for addre in address %}
+                    <div class="address-card">
+                        <input 
+                        type="radio" 
+                        name="selected_address" 
+                        value="{{ addre.id }}"
+                        checked
+                        >
+                        <label for="address">
+                            {{ addre.name }}, {{ addre.address }} - {{ addre.pincode }}
+                        </label>
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
+        
+        <!-- Place Order Button -->
+        <a href="Payment" class="place-order-btn">Place Order</a>
+    </div>
+{% endblock content %}
+</body>
+

@@ -1,0 +1,10 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}{{block.super}} Home{% endblock title %}
+{% block content %}
+{% include "core/hero.html" %}
+{% include "core/video.html" %}
+{% include "core/hero2.html" %}
+{% include "core/photosection.html" %}
+{% include "core/services.html" %}
+{% endblock content %}

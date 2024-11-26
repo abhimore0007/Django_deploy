@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      background-color: #121212;
+      color: #ffffff;
+    }
+
+    /* Sidebar styling */
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      background-color: #1e1e1e;
+      padding: 20px;
+      box-sizing: border-box;
+      position: fixed;
+    }
+
+    .sidebar h2 {
+      font-size: 20px;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar ul li {
+      margin: 15px 0;
+    }
+
+    .sidebar ul li a {
+      text-decoration: none;
+      font-size: 16px;
+      color: #a9a9a9;
+      display: block;
+      transition: color 0.3s ease;
+    }
+
+    .sidebar ul li a:hover,
+    .sidebar ul li a:target {
+      color: #ffffff;
+      font-weight: bold;
+    }
+
+    /* Main content area */
+    .main-content {
+      margin-left: 250px;
+      padding: 20px;
+      flex-grow: 1;
+    }
+
+    /* Hide all content sections by default */
+    .content-section {
+      display: none;
+    }
+
+    /* Show the targeted section */
+    .content-section:target {
+      display: block;
+    }
+
+    /* Show the Profile section by default if no other section is targeted */
+    body:not(:has(:target)) #profile {
+      display: block;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    /* Individual card */
+    .card {
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .card i {
+      font-size: 36px;
+      color: #3498db;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      color: #ffffff;
+      margin: 10px 0;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #a9a9a9;
+      margin: 0;
+    }
+
+    .profile-section {
+      text-align: center;
+      margin: 50px 0;
+    }
+
+    .profile-section img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid #3498db;
+      margin-bottom: 15px;
+    }
+
+    .profile-section h1 {
+      font-size: 28px;
+      color: #ffffff;
+      margin: 10px 0;
+    }
+
+    .profile-section p {
+      font-size: 16px;
+      color: #a9a9a9;
+      margin: 5px 0;
+    }
+
+    /* Form Styling */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .cp-label {
+      font-weight: 500;
+      font-size: 1rem;
+      text-align: left;
+      color: #555;
+    }
+
+    .cp-input,
+    .cp-textarea {
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: border-color 0.3s ease;
+      background-color: #fafafa;
+    }
+
+    .cp-input:focus,
+    .cp-textarea:focus {
+      border-color: #4CAF50;
+      outline: none;
+    }
+
+    .cp-error {
+      color: #f44336;
+      font-size: 0.9rem;
+      margin-top: 5px;
+    }
+
+    /* Button Styling */
+    .cp-button-group {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .cp-button {
+      padding: 12px 20px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: auto;
+      text-align: center;
+    }
+
+    .cp-save-button {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .cp-save-button:hover {
+      background-color: #45a049;
+    }
+
+    .cp-cancel-button {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .cp-cancel-button:hover {
+      background-color: #e53935;
+    }
+
+    /* Home Button */
+    .cp-top-right-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .cp-top-right-button:hover {
+      background-color: #1976D2;
+    }
+
+    /* Forgot Password Link */
+    .cp-forgot-password {
+      margin-top: 20px;
+    }
+
+    .cp-forgot-password a {
+      color: #2196F3;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+    .cp-forgot-password a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .cp-profile-section {
+        padding: 20px;
+        max-width: 90%;
+      }
+
+      .cp-button-group {
+        flex-direction: column;
+      }
+
+      .cp-button {
+        width: 100%;
+        margin-bottom: 15px;
+      }
+    }
+    .edit-icon {
+      font-size: 18px;
+      color: #3498db;
+      margin-left: 10px;
+      transition: color 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+    }
+  
+    .edit-icon:hover {
+      color: #45a049; /* Highlight color on hover */
+      transform: scale(1.2); /* Slight zoom effect */
+    }
+
+    /* Form Styling */
+.profile-form {
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: #1e1e1e;
+  padding: 20px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 16px;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea,
+select {
+  width: 95%;
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #121212;
+  color: #ffffff;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus,
+select:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+.form-error {
+  color: #f44336;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.cp-save-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.cp-save-button:hover {
+  background-color: #45a049;
+}
+
+.cp-cancel-button {
+  background-color: #f44336;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+}
+
+.cp-cancel-button:hover {
+  background-color: #e53935;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-form {
+    padding: 15px;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Dashboard</h2>
+    <ul>
+      <li><a href="{% url "Profile" %}" class="active">Profile</a></li>
+      <li><a href="#my-orders">My Orders</a></li>
+      <li><a href="#wishlist">Wishlist</a></li>
+      <li><a href="{% url "changePassword" %}">Change Password</a></li>
+      <li><a href="{% url "AddressPage" %}">Address Book</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div id="profile" class="content-section">
+      <div class="profile-section">
+        <img src="https://via.placeholder.com/120" alt="Profile Picture">
+        <h1>Name : {{request.user.first_name}}</h1>    
+        <p>Email : {{request.user.email}}</p>  
+      </div>
+      <form action="" method="POST" class="profile-form">
+        {% csrf_token %}
+        {% for PE in UC %}
+          <div class="form-group">
+            <label class="form-label" for="{{ PE.id_for_label }}">{{ PE.label }}</label>
+            {{ PE }}
+            {% if PE.errors %}
+              <div class="form-error">{{ PE.errors }}</div>
+            {% endif %}
+          </div>
+        {% endfor %}
+        <div class="form-buttons">
+          <button type="submit" class="btn btn-success cp-save-button">Save</button>
+          <a href="/" class="btn btn-secondary cp-cancel-button">Cancel</a>
+        </div>
+      </form>
+     
+   
+      
+  <a href="/"> <button class="cp-top-right-button">Home</button> </a>
+</body>
+</html>

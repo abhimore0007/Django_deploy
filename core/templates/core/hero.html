@@ -1,0 +1,40 @@
+{% load static %}
+
+<style>
+    .first-hero-text {
+        background-color: black;
+        color: white;
+        padding: 20px; /* Add some padding */
+      }
+      
+      
+      
+      #HeroTitle{
+        font-size: 3.4rem;
+      }
+      #HeroTitle span{
+        color: rgb(205, 104, 33);
+      }
+      .first-hero-img {
+        height: auto; /* Set height to auto */
+        max-width: 100%; /* Ensure image doesn't overflow */
+        padding-top: 150px;
+      }
+
+</style>
+
+
+<div class="container-fluid">
+    <div class="row align-items-center first-hero-text">
+        <div class="col-md-6">
+            <h1 id="HeroTitle">A Watch For Every Journey,<br><span> Every Occasion</span></h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lacinia odio vitae vestibulum.</p>
+            <a href="{% url "categories" %}">
+              <button class="btn btn-outline-warning">Shop Now</button>
+            </a>
+        </div>
+        <div class="col-md-6 first-hero-img">
+            <img src="{% static "core/imgs/43-Greubel_Forsey_Brands.jpg" %}" alt="Description" class="img-fluid">
+        </div>
+    </div>
+</div>

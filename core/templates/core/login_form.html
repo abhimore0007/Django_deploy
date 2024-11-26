@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Login{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'core/css/bootstrap.min.css' %}">
+    <style>
+        /* Additional Styling for Form Inputs */
+        .form-control {
+            border-radius: 0.5rem;
+            border: 1px solid #ced4da;
+            padding: 0.75rem;
+            font-size: 1rem;
+            background-color: #f9f9f9;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .error-message p {
+            color: #dc3545;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="vh-100" style="background-color: rgb(0, 0, 0);">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-xl-8">
+                    <div class="card" style="border-radius: 1rem; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);">
+                        <div class="row g-0">
+                            <div class="col-md-6 col-lg-5 d-none d-md-block">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
+                                    alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                            </div>
+                            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                                <div class="card-body p-4 p-lg-5 text-black">
+                                    <form action="" method="POST" novalidate>
+                                        <h2 class="fw-bold mb-4 text-center" style="color: #000000;">Login Form</h2>
+                                        {% csrf_token %}
+                                        
+                                        <!-- Non-field Errors -->
+                                        {% if log.non_field_errors %}
+                                            <div class="alert alert-danger">
+                                                {% for error in log.non_field_errors %}
+                                                    <p>{{ error }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                        
+                                        <!-- Display Error Messages -->
+                                        {% if messages %}
+                                            <div class="alert alert-danger">
+                                                {% for message in messages %}
+                                                    <p>{{ message }}</p>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+
+                                        <!-- Form Fields -->
+                                        {% for field in log %}
+                                            <div class="form-group mb-3">
+
+                                                {{ field }}
+                                            </div>
+                                        {% endfor %}
+
+                                        <!-- Submit Button -->
+                                        <div class="pt-1 mb-4 text-center">
+                                            <button class="btn btn-primary btn-lg btn-block w-100" type="submit">Login</button>
+                                        </div>
+
+                                        <!-- Additional Links -->
+                                        <div class="text-center">
+                                            <a class="small text-muted" href="#!">Forgot password?</a>
+                                            <p class="mt-3" style="color: #393f81;">Don't have an account? <a href="{% url "register" %}" style="color: #007bff;">Register here</a></p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="{% static 'core/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
