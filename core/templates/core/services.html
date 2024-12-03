@@ -1,5 +1,8 @@
+{% block content %}
 {% load static %}
-<section class="bsb-service-7 py-5 py-xl-8 servics-section" style="background-color: black; border-radius: 30px; padding-bottom: 70px;">
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}?v=1">
+
+<section class="bsb-service-7 py-5 py-xl-8 servics-section">
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col-12 col-md-10 col-lg-8 col-xl-7">
@@ -7,36 +10,36 @@
             </div>
         </div>
     </div>
-
+    
     <div class="container-fluid">
         <div class="row">
             <div class="col-12" id="second-cont">
-                <div class="container-fluid border shadow" style="border-radius: 30px;">
+                <div class="service-container">
                     <div class="row">
                         <div class="col-12 col-md-4 p-0">
-                            <div class="card border-0 bg-transparent text-center">
-                                <div class="card-body p-5">
-                                    <i class="bi bi-basket2-fill text-warning mb-4" style="font-size: 56px;"></i>
-                                    <h4 class="fw-bold text-uppercase mb-4">Strategy</h4>
-                                    <p class="mb-4">The first phase is to develop a strategy for the product or service that the tech company is developing. This involves understanding the market and identifying the needs.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-4 p-0 ">
-                            <div class="card border-0 bg-transparent text-center">
-                                <div class="card-body p-5">
-                                    <i class="bi bi-rocket text-warning mb-4" style="font-size: 56px;"></i>
-                                    <h4 class="fw-bold text-uppercase mb-4">Design</h4>
-                                    <p class="mb-4">Once the strategy is in place, the next phase is to design the product or service. This involves creating wireframes, prototypes, and mockups to test the design.</p>
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-basket2-fill icon"></i>
+                                    <h4 class="card-title">Strategy</h4>
+                                    <p class="card-text">The first phase is to develop a strategy for the product or service that the tech company is developing. This involves understanding the market and identifying the needs.</p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-md-4 p-0">
-                            <div class="card border-0 bg-transparent text-center">
-                                <div class="card-body p-5">
-                                    <i class="bi bi-incognito text-warning mb-4" style="font-size: 56px;"></i>
-                                    <h4 class="fw-bold text-uppercase mb-4">Development</h4>
-                                    <p class="mb-4">Once the design is finalized, the next phase is to develop the product or service. This involves writing code, building databases, and creating other assets.</p>
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-rocket icon"></i>
+                                    <h4 class="card-title">Design</h4>
+                                    <p class="card-text">Once the strategy is in place, the next phase is to design the product or service. This involves creating wireframes, prototypes, and mockups to test the design.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 p-0">
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <i class="bi bi-incognito icon"></i>
+                                    <h4 class="card-title">Development</h4>
+                                    <p class="card-text">Once the design is finalized, the next phase is to develop the product or service. This involves writing code, building databases, and creating other assets.</p>
                                 </div>
                             </div>
                         </div>
@@ -46,3 +49,4 @@
         </div>
     </div>
 </section>
+{% endblock content %}

@@ -1,55 +1,54 @@
 
-
-
-
-
-
-
-.servics-section {
+/* Hero 1 css start */
+.first-hero-text {
   background-color: black;
-  color: rgb(255, 255, 255);
-}
-.service-title {
   color: white;
-  font-size: 3rem;
-  padding-bottom: 40px;
-}
-@media (max-width: 768px) {
-  .first-hero-text {
-      text-align: center; /* Center text */
-      padding: 10px; /* Reduce padding */
-  }
-  .first-hero-img {
-      padding-top: 50px; /* Reduce top padding */
-  }
-  .service-title {
-      font-size: 2rem; /* Smaller font size */
-  }
-  .card-body {
-      padding: 3rem 1rem; /* Adjust padding for cards */
-  }
-}
-#second-cont{
-  border-radius: 150px;
+  padding: 20px; /* Add some padding */
 }
 
-
-
-
-
-.product_heading{
- text-align: center;
- font-size: 3.5rem;
- background-color: black;
- color: white;
- padding-bottom: 30px;
-}
-.product-section{
-  background-color: black;
-  padding-left: 30px;
-  padding-right: 30px;
+#HeroTitle {
+  font-size: 3.4rem;
 }
 
+#HeroTitle span {
+  color: rgb(205, 104, 33);
+}
+
+.first-hero-img {
+  height: auto; /* Set height to auto */
+  max-width: 100%; /* Ensure image doesn't overflow */
+  padding-top: 150px;
+}
+
+/* Button Styles */
+.custom-btn {
+  background-color: #f0ad4e; /* Warning color */
+  color: white; /* Text color */
+  border: 2px solid #f0ad4e; /* Border matching the background */
+  border-radius: 25px; /* Rounded corners */
+  padding: 10px 20px; /* Button padding */
+  font-size: 16px; /* Font size */
+  font-weight: bold; /* Bold text */
+  text-transform: uppercase; /* Uppercase text */
+  transition: all 0.3s ease; /* Smooth hover effect */
+}
+
+.custom-btn:hover {
+  background-color: white; /* Change background to white */
+  color: #f0ad4e; /* Change text color to match border */
+  border-color: #f0ad4e; /* Keep border color the same */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+}
+
+.custom-btn:focus {
+  outline: none; /* Remove focus outline */
+  box-shadow: 0 0 5px rgba(240, 173, 78, 0.8); /* Focus shadow */
+}
+
+
+/* hero 1 css end */
+
+/* second hero css start */
 
 .second-hero-img{
   color: white;
@@ -71,28 +70,215 @@
   padding-bottom: 130px;
 }
 
+/* second hero css end */
 
+/* video css start */
 
-.photo-section{
-  background-color: black;
-}
-.card{
-  border-radius: 10px;
-}
-.card-img-top{
-  border-radius: 10px;
+.video-section {
+  background-color: black; /* Set background color to black */
+      padding: 20px 0; /* Add some vertical padding */
+    }
+    
+    .video-section video {
+      width: 99%; /* Ensure the video takes full width */
+      height: auto; /* Maintain aspect ratio */
+    }
+    
+    
+    .video-section {
+      position: relative;
+      overflow: hidden;
+    }
+    .video-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white; /* Text color */
+      text-align: center;
+      z-index: 2; /* Ensure text is above video */
+    }
+    
+/* video css end */
+
+/* photo curosal css start */
+ /* Wrapper settings for centering the content */
+ .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 95vh;
+  background-color: black; /* Black background for the whole section */
+  flex-direction: column; /* Stack heading and slider vertically */
 }
 
-#photo-section-title{
-  padding-top: 50px;
-  font-size: 4rem;
+/* Styling for the heading */
+.slider-heading {
   color: white;
-  padding-bottom: 50px;
+  font-size: 2.5rem;
+  font-weight: bolder;
+  /* margin-bottom: 20px; Add spacing between the heading and slider */
+  text-align: center;
+  text-transform: uppercase;
 }
 
+/* Styling for the slider */
+.slider {
+  height: 330px;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  width: 80%;
+}
 
-/* Regsiter Form css ############################################################################################################ */
+.slider .slide-track {
+  animation: scroll 30s linear infinite;
+  display: flex;
+  width: calc(250px * 14);
+}
+
+.slider .slide {
+  height: 300px;
+  width: 450px;
+  margin-right: 20px; /* Add space between the slides */
+}
+
+.slider .slide img {
+  width: 100%; /* Full width of the slide */
+  height: 100%; /* Make images fill the height */
+  object-fit: cover; /* Make sure the images cover the space without distortion */
+  border-radius: 10px;
+  border: 2px solid #bbb;
+}
+
+/* Animation for the sliding effect */
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-250px * 7)); }
+}
+
+/* photo curosal css end */
+
+/* services css start */
+/* Section Background and Padding */
+.bsb-service-7 {
+    border-radius: 30px;
+    padding-bottom: 70px;
+}
+
+/* Service Title */
+.service-title {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Service Container */
+.service-container {
+    border: 1px solid #ddd;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    background-color: rgb(0, 0, 0);
+}
+
+/* Card Styling */
+.card {
+    background: transparent;
+    border: none;
+}
+
+.card-body {
+    padding: 40px 20px;
+}
+
+.card-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: rgb(255, 255, 255);
+}
+
+.card-text {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+/* Icon Styling */
+.icon {
+    font-size: 56px;
+    color: #ffc107;
+    margin-bottom: 20px;
+}
+
+/* Utility Classes */
+.text-center {
+    text-align: center;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+/* services css end */
 
 
+/* footer css start */
+
+ /* Footer background and text styling */
+ footer {
+  background-color: black; /* Black background for footer */
+  color: white; /* White text for contrast */
+  padding-top: 20px;
+}
+
+/* Section headings */
+footer h6 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+/* Paragraph and links styling */
+footer p, footer a {
+  color: #dcdcdc; /* Light gray for text */
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #f4c10f; /* Gold color on hover for links */
+}
+
+/* Social media buttons styling */
+.btn-floating {
+  background-color: #f4c10f; /* Gold buttons */
+  color: black;
+  border: none;
+}
+
+.btn-floating:hover {
+  background-color: white; /* White on hover */
+  color: black;
+}
+
+/* Horizontal divider styling */
+hr {
+  border-top: 1px solid #444; /* Subtle divider */
+  margin: 20px 0;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+  footer h6 {
+      font-size: 1rem;
+  }
+  footer p {
+      font-size: 0.8rem;
+  }
+}
+/* footer css end */
+    
 
 

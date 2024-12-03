@@ -1,25 +1,7 @@
+{% block content %}
 {% load static %}
-<style>
-    .second-hero-img{
-        color: white;
-        padding-top: 10px;
-    }
-    
-    .second-hero-img h1{
-        font-size: 5rem;
-        color: rgb(205, 104, 33);
-    }
-    
-    .second-hero-img p{
-        font-size: 1.5rem;
-    }
-    
-    .second-hero{
-        padding-top: 90px;
-        background-color: black;
-        padding-bottom: 130px;
-    }
-</style>
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}?v=1">
+
 <div class="container-fluid">
     <div class="row align-items-center  second-hero">
         <div class="col-md-6">
@@ -31,3 +13,4 @@
         </div>
     </div>
 </div>
+{% endblock content %}
