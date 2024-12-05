@@ -152,7 +152,7 @@
           <div class="product-price">{{ watch_details.discounted_price }}</div>
           <div class="button-container">
             <a class="button" href="{% url 'AddToCart' watch_details.id %}">Add to Cart</a>
-            <button class="button">Buy Now</button>
+            <a class="button" href="{% url 'Buy_now' watch_details.id %}">Buy Now</a>
           </div>
         </div>
       </div>

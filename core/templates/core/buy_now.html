@@ -77,7 +77,7 @@
             <div class="summary-card">
                 <div class="summary-row">
                     <span>Total:</span>
-                    <span class="cart-total">&#8377; {{ total }}</span>
+                    <span class="cart-total">&#8377; {{ watch.discounted_price }}</span>
                 </div>
                 <div class="summary-row">
                     <span>Shipping:</span>
@@ -94,21 +94,21 @@
         <!-- Address Selection -->
         <div class="address-selection mb-4">
             <h5>Select Address</h5>
-            <form action="{% url "Payment" %}" method="POST">
+            <form action="{% url "buynowpayment" watch.id %}" method="POST">
                 {% csrf_token %}
                 {% for addre in address %}
                     <div class="address-card">
-                        <input type="radio" name="selected_address" value="{{ addre.id }}" checked>
+                        <input type="radio" name="buynow_selected_address" value="{{ addre.id }}"checked>
                         <label for="address">
                             {{ addre.name }}, {{ addre.address }} - {{ addre.pincode }}
                         </label>
                     </div>
                 {% endfor %}
-                <input type="submit" class="btn btn-primary btn-sm mt-2" value="Proceed to Payment">
             </form>
         </div>
         
         <!-- Place Order Button -->
+        <a href="{% url "Payment" %}" class="place-order-btn">Place Order</a>
     </div>
 {% endblock content %}
 </body>

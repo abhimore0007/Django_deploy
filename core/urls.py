@@ -24,8 +24,11 @@ urlpatterns = [
     path('Profile_edit',views.Profile_edit,name='Profile_edit'),
     path('Check_Out',views.Check_Out,name='Check_Out'),
     path('Payment',views.Payment,name='Payment'),
-    path('payment_success/',views.payment_success,name='paymentsuccess'),
+    path('payment_success/<int:selected_address_id>',views.payment_success,name='paymentsuccess'),
     path('payment_failed/',views.payment_failed,name='paymentfailed'),
+    path('Buy_now/<int:id>',views.Buy_now,name='Buy_now'),
+    path('buynow_payment/<int:id>',views.buynow_payment,name='buynowpayment'),
+    path('Order_Page/',views.User_order,name="Order")
     
    
 ]

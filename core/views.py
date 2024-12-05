@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate,login,logout,update_session_auth_ha
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import SetPasswordForm
-from .models import Watch,Cart,Customer_Detail
+from .models import Watch,Cart,Customer_Detail,Order
 # Create your views here.
 
 #===============For Paypal =========================
@@ -220,40 +220,99 @@ def Check_Out(request):
     
 
 def Payment(request):
+        if request.method == 'POST':
+            selected_address_id = request.POST.get('selected_address')
+            print('sadsadsaas',selected_address_id)
 
-    watch_view=Cart.objects.filter(user=request.user)
-    total=0
-    delivery_charges=3000
-    for viewcart in watch_view:
-        total+=(viewcart.product.discounted_price*viewcart.quantity)
-    final_price =total+delivery_charges
+        watch_view=Cart.objects.filter(user=request.user)
+        total=0
+        delivery_charges=3000
+        for viewcart in watch_view:
+            total+=(viewcart.product.discounted_price*viewcart.quantity)
+        final_price =total+delivery_charges
 
-     #================= Paypal Code =====================
-   
-    host = request.get_host()   # Will fecth the domain site is currently hosted on.
-   
-    paypal_checkout = {
-        'business': settings.PAYPAL_RECEIVER_EMAIL,   #This is typically the email address associated with the PayPal account that will receive the payment.
-        'amount': final_price,    #: The amount of money to be charged for the transaction. 
-        'item_name': 'Watch',       # Describes the item being purchased.
-        'invoice': uuid.uuid4(),  #A unique identifier for the invoice. It uses uuid.uuid4() to generate a random UUID.
-        'currency_code': 'USD',
-        'notify_url': f"http://{host}{reverse('paypal-ipn')}",         #The URL where PayPal will send Instant Payment Notifications (IPN) to notify the merchant about payment-related events
-        'return_url': f"http://{host}{reverse('paymentsuccess')}",     #The URL where the customer will be redirected after a successful payment. 
-        'cancel_url': f"http://{host}{reverse('paymentfailed')}",      #The URL where the customer will be redirected if they choose to cancel the payment. 
-    }
+        #================= Paypal Code =====================
+    
+        host = request.get_host()   # Will fecth the domain site is currently hosted on.
+    
+        paypal_checkout = {
+            'business': settings.PAYPAL_RECEIVER_EMAIL,   #This is typically the email address associated with the PayPal account that will receive the payment.
+            'amount': final_price,    #: The amount of money to be charged for the transaction. 
+            'item_name': 'Watch',       # Describes the item being purchased.
+            'invoice': uuid.uuid4(),  #A unique identifier for the invoice. It uses uuid.uuid4() to generate a random UUID.
+            'currency_code': 'USD',
+            'notify_url': f"http://{host}{reverse('paypal-ipn')}",         #The URL where PayPal will send Instant Payment Notifications (IPN) to notify the merchant about payment-related events
+            'return_url': f"http://{host}{reverse('paymentsuccess',args=[selected_address_id])}",     #The URL where the customer will be redirected after a successful payment. 
+            'cancel_url': f"http://{host}{reverse('paymentfailed')}",      #The URL where the customer will be redirected if they choose to cancel the payment. 
+        }
 
-    paypal_payment = PayPalPaymentsForm(initial=paypal_checkout)
+        paypal_payment = PayPalPaymentsForm(initial=paypal_checkout)
 
-  #================= Paypal Code  End =====================
-    return render(request,'core/payment_page.html',{'paypal':paypal_payment})
+    #================= Paypal Code  End =====================
+        return render(request,'core/payment_page.html',{'paypal':paypal_payment})
 
-def payment_success(request):
+def payment_success(request,selected_address_id):
+
+    user= request.user
+    address_data = Customer_Detail.objects.get(pk=selected_address_id)
+    cart=Cart.objects.filter(user=request.user)
+    for cart in cart:
+        Order(user=user,customer=address_data,quantity=cart.quantity,Watch=cart.product).save()
+        cart.delete()
     return render(request,'core/payment_success.html')
 
 
 def payment_failed(request):
     return render(request,'core/payment_failed.html')
+
+
+def User_order(request):
+    ord= Order.objects.filter(user=request.user)
+    return render(request,'core/Order.html',{'ord':ord})
+
+def Buy_now(request, id):
+    watch = Watch.objects.get(pk=id)     # cart_items will fetch product of current user, and show product available in the cart of the current user.
+    delhivery_charge = 2000
+    
+    # Access the actual value of discounted_price
+    final_price = delhivery_charge + watch.discounted_price  # watch.discounted_price should directly return the value now
+    
+    address = Customer_Detail.objects.filter(user=request.user)
+
+    return render(request, 'core/buy_now.html', {'final_price': final_price, 'address': address, 'watch': watch})
+
+
+def buynow_payment(request,id):
+
+    if request.method == 'POST':
+        selected_address_id = request.POST.get('buynow_selected_address')
+
+    pet = Watch.objects.get(pk=id)     # cart_items will fetch product of current user, and show product available in the cart of the current user.
+    delhivery_charge =2000
+    final_price= delhivery_charge + pet.discounted_price
+    
+    address = Customer_Detail.objects.filter(user=request.user)
+    #================= Paypal Code ======================================
+
+    host = request.get_host()   # Will fecth the domain site is currently hosted on.
+
+    paypal_checkout = {
+        'business': settings.PAYPAL_RECEIVER_EMAIL,
+        'amount': final_price,
+        'item_name': 'Pet',
+        'invoice': uuid.uuid4(),
+        'currency_code': 'USD',
+        'notify_url': f"http://{host}{reverse('paypal-ipn')}",
+        'return_url': f"http://{host}{reverse('buynowpaymentsuccess', args=[selected_address_id,id])}",
+        'cancel_url': f"http://{host}{reverse('paymentfailed')}",
+    }
+
+    paypal_payment = PayPalPaymentsForm(initial=paypal_checkout)
+
+    #========================================================================
+
+    return render(request, 'core/payment.html', {'final_price':final_price,'address':address,'pet':pet,'paypal':paypal_payment})
+
 
 
     

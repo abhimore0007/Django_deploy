@@ -83,3 +83,22 @@ class Customer_Detail(models.Model):
     
     def __str__(self):
         return str(self.id)
+
+
+class Order(models.Model):
+    STATUS_CHOICES = [
+        ('PENDING', 'Pending'),
+        ('PROCESSING', 'Processing'),
+        ('COMPLETED', 'Completed'),
+        ('CANCELLED', 'Cancelled'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer_Detail, on_delete=models.CASCADE)
+    Watch = models.ForeignKey(Watch, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    order_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
+
+    def __str__(self):
+        return str(self.id)
