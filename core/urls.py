@@ -28,7 +28,9 @@ urlpatterns = [
     path('payment_failed/',views.payment_failed,name='paymentfailed'),
     path('Buy_now/<int:id>',views.Buy_now,name='Buy_now'),
     path('buynow_payment/<int:id>',views.buynow_payment,name='buynowpayment'),
-    path('Order_Page/',views.User_order,name="Order")
+    path('buynow_payment_success/<int:selected_address_id>/<int:id>',views.buynow_payment_success,name='buynowpaymentsuccess'),
+    path('Order_Page/',views.User_order,name="Order"),
+    path('About_Us/',views.About_us,name="About")
     
    
 ]

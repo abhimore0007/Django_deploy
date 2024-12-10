@@ -103,12 +103,12 @@
                             {{ addre.name }}, {{ addre.address }} - {{ addre.pincode }}
                         </label>
                     </div>
-                {% endfor %}
+                    {% endfor %}
+                    <input type="submit" class="btn btn-primary btn-sm mt-2" value="Proceed to Payment">
             </form>
         </div>
         
         <!-- Place Order Button -->
-        <a href="{% url "Payment" %}" class="place-order-btn">Place Order</a>
     </div>
 {% endblock content %}
 </body>

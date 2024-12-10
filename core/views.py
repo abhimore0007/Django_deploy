@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import SetPasswordForm
 from .models import Watch,Cart,Customer_Detail,Order
+from datetime import date
 # Create your views here.
 
 #===============For Paypal =========================
@@ -95,14 +96,26 @@ def watch_details(request,id):
     watch_details=Watch.objects.get(pk=id)
     return render(request,'core/watch_details.html',{'watch_details':watch_details})
 
-def Add_To_Cart(request,id):
+from django.contrib import messages
+
+def Add_To_Cart(request, id):
     if request.user.is_authenticated:
-        watch_cart=Watch.objects.get(pk=id)
-        user=request.user
-        Cart(user=user,product=watch_cart).save()
+        watch_cart = Watch.objects.get(pk=id)
+        user = request.user
+
+        # Check if the product is already in the user's cart
+        if Cart.objects.filter(user=user, product=watch_cart).exists():
+            # Add a message indicating the product is already added
+            messages.warning(request, "Product already added to the cart.")
+        else:
+            # Add the product to the cart
+            Cart(user=user, product=watch_cart).save()
+            messages.success(request, "Product added to the cart successfully.")
+        
         return redirect('watchdetails', id)
     else:
         return redirect('login')
+
     
 
 def view_To_Cart(request):
@@ -222,7 +235,6 @@ def Check_Out(request):
 def Payment(request):
         if request.method == 'POST':
             selected_address_id = request.POST.get('selected_address')
-            print('sadsadsaas',selected_address_id)
 
         watch_view=Cart.objects.filter(user=request.user)
         total=0
@@ -267,8 +279,9 @@ def payment_failed(request):
 
 
 def User_order(request):
+    current_date = date.today()
     ord= Order.objects.filter(user=request.user)
-    return render(request,'core/Order.html',{'ord':ord})
+    return render(request,'core/Order.html',{'ord':ord,'current_date': current_date})
 
 def Buy_now(request, id):
     watch = Watch.objects.get(pk=id)     # cart_items will fetch product of current user, and show product available in the cart of the current user.
@@ -287,12 +300,12 @@ def buynow_payment(request,id):
     if request.method == 'POST':
         selected_address_id = request.POST.get('buynow_selected_address')
 
-    pet = Watch.objects.get(pk=id)     # cart_items will fetch product of current user, and show product available in the cart of the current user.
+    watch = Watch.objects.get(pk=id)     # cart_items will fetch product of current user, and show product available in the cart of the current user.
     delhivery_charge =2000
-    final_price= delhivery_charge + pet.discounted_price
+    final_price= delhivery_charge + watch.discounted_price
     
     address = Customer_Detail.objects.filter(user=request.user)
-    #================= Paypal Code ======================================
+    #================= Paypal Code ================================================
 
     host = request.get_host()   # Will fecth the domain site is currently hosted on.
 
@@ -311,7 +324,20 @@ def buynow_payment(request,id):
 
     #========================================================================
 
-    return render(request, 'core/payment.html', {'final_price':final_price,'address':address,'pet':pet,'paypal':paypal_payment})
+    return render(request, 'core/payment_page.html', {'final_price':final_price,'address':address,'Watch':watch,'paypal':paypal_payment})
+
+def buynow_payment_success(request, selected_address_id, id):
+    user = request.user
+    customer_data = Customer_Detail.objects.get(pk=selected_address_id)
+    watch_instance = Watch.objects.get(pk=id)  # Rename the variable to avoid conflict
+    Order(user=user, customer=customer_data, Watchs=watch_instance, quantity=1).save()
+   
+    return render(request, 'core/buynow_payment_success.html')
+
+
+def About_us(request):
+    return render(request,"core/About_us.html")
+
 
 
 

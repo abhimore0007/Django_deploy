@@ -1,0 +1,146 @@
+{% extends "core/base.html" %}
+
+{% block title %}About Us - WatchMart{% endblock %}
+
+{% block content %}
+<style>
+    /* General Styling */
+    body {
+        font-family: 'Arial', sans-serif;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+        background-color: #121212;  /* Dark background */
+        color: #fff;  /* White text */
+    }
+
+    .about-container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.1);  /* Glass-like background */
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px); /* Glass blur effect */
+        text-align: center;
+    }
+
+    .about-container h1 {
+        font-size: 2.5rem;
+        color: #fff;
+        margin-bottom: 20px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .about-container h1 .icon {
+        font-size: 2.5rem;
+        color: #007bff;
+        margin-right: 10px;
+    }
+
+    .about-container p {
+        font-size: 1.1rem;
+        color: #ccc;  /* Light text for readability */
+        margin-bottom: 20px;
+        text-align: justify;
+    }
+
+    .info-section {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .info-card {
+        background: rgba(0, 0, 0, 0.6);  /* Semi-transparent dark background for elegance */
+        border-radius: 12px;
+        padding: 30px;
+        width: 350px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7); /* Deeper shadow for a high-end effect */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        backdrop-filter: blur(10px); /* Glass-like effect */
+    }
+
+    .info-card:hover {
+        transform: translateY(-8px); /* Slight lift on hover for elegance */
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8); /* Stronger shadow on hover */
+    }
+
+    .info-card .icon {
+        font-size: 3rem;
+        color: #ffd700; /* Gold color for an upscale, luxurious feel */
+        margin-bottom: 15px;
+    }
+
+    .info-card h3 {
+        font-size: 1.7rem;
+        color: #fff;
+        margin-bottom: 12px;
+        font-weight: bold;
+    }
+
+    .info-card p {
+        font-size: 1.1rem;
+        color: #d3d3d3; /* Light grey text for a classy touch */
+        line-height: 1.6;
+    }
+
+    .explore-btn {
+        background: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 12px 25px;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 30px;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .explore-btn:hover {
+        background: #0056b3;
+        transform: translateY(-3px);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .info-section {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .info-card {
+            width: 90%;
+        }
+    }
+</style>
+
+<div class="about-container">
+    <h1>ABOUT US</h1>
+    <p>Welcome to TimeZone, your one-stop destination for timeless elegance and cutting-edge designs. 
+       At TimeZone, we believe that every second counts, and so does every watch you wear.</p>
+    <p>We are committed to providing premium-quality timepieces that redefine sophistication and style.</p>
+
+    <div class="info-section">
+        <div class="info-card">
+            <span class="icon">🕒</span>
+            <h3>Our History</h3>
+            <p>Since 2024, we've been curating the finest collections to meet every customer's unique taste. Our passion for timeless design ensures that each watch tells a story.</p>
+        </div>
+        <div class="info-card">
+            <span class="icon">🔧</span>
+            <h3>Our Craftsmanship</h3>
+            <p>Every timepiece is meticulously crafted using the highest quality materials, ensuring precision, elegance, and a legacy of durability that lasts a lifetime.</p>
+        </div>
+        <div class="info-card">
+            <span class="icon">🌍</span>
+            <h3>Global Reach</h3>
+            <p>We cater to an elite global clientele, providing seamless shopping experiences with secure worldwide delivery, ensuring our watches reach you, wherever you are.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
