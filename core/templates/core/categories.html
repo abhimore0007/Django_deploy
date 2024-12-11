@@ -10,29 +10,28 @@
     /* Custom styles for dark theme */
     body {
       font-family: 'Arial', sans-serif;
-      background-color: #1a1a1a; /* Dark background */
+      background-color: #1a1a1a;
       color: white;
-      position: relative; /* This will allow absolute positioning of the button */
+      position: relative;
     }
 
     .card {
       border: none;
       border-radius: 12px;
-      background-color: #333333; /* Dark card background */
+      background-color: #333333;
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
       transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     }
 
-
     .card-img-top {
-      height: 400px; /* Adjust height to ensure the full image is displayed */
-      object-fit: contain; /* Ensures the entire image is visible without cropping */
+      height: 400px;
+      object-fit: contain;
       border-radius: 12px;
-      width: 100%; /* Makes sure the image spans the full width of the card */
+      width: 100%;
     }
 
     .card-body {
-      background-color: #333333; /* Dark card body */
+      background-color: #333333;
       padding: 20px;
       text-align: center;
     }
@@ -40,19 +39,19 @@
     .card-title {
       font-size: 1.6rem;
       font-weight: bold;
-      color: #e67e22; /* Bright title */
+      color: #e67e22;
     }
 
     .card-text {
       font-size: 1.2rem;
-      color: #bdc3c7; /* Lighter gray text */
+      color: #bdc3c7;
       margin-bottom: 15px;
     }
 
     .price {
       font-size: 1.4rem;
       font-weight: bold;
-      color: #e67e22; /* Bright price */
+      color: #e67e22;
     }
 
     .btn-custom {
@@ -73,75 +72,11 @@
       padding-top: 50px;
     }
 
-    /* Modal styling */
-    .modal-content {
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      background-color: #2c3e50; /* Dark modal background */
-      border: none;
-    }
-
-    .modal-header {
-      background-color: #1a1a1a; /* Dark modal header */
-      color: white;
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-      padding: 20px;
-    }
-
-    .modal-title {
-      font-weight: bold;
-      font-size: 1.5rem;
-    }
-
-    .form-label {
-      font-weight: bold;
-      color: #e67e22; /* Bright form label */
-    }
-
-    .form-select, .form-range {
-      border-radius: 5px;
-      padding: 10px;
-      border: 1px solid #bdc3c7;
-      background-color: #444444; /* Dark select and range */
-      color: white;
-    }
-
-    .btn-primary {
-      background-color: #e67e22;
-      border: none;
-      font-size: 1rem;
-      padding: 10px 20px;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
-
-    .btn-primary:hover {
-      background-color: #d35400;
-    }
-
-    /* Modal body */
-    .modal-body {
-      padding: 30px;
-    }
-
-    /* Close button */
-    .btn-close {
-      background-color: #e67e22;
-      color: white;
-    }
-
-    /* Additional form styling */
-    .form-group {
-      margin-bottom: 15px;
-    }
-
-    /* Style for the button in the top-right corner */
     .top-right-button {
       position: absolute;
       top: 20px;
       right: 20px;
-      background-color: #2094e1;  
+      background-color: #2094e1;
       border: none;
       padding: 10px 20px;
       font-size: 1rem;
@@ -153,33 +88,31 @@
       background-color: #0f79bf;
       font-weight: bold;
     }
-
   </style>
 </head>
 <body>
 
   <!-- Button in the top-right corner -->
-  <button class="top-right-button">Home</button>
+  <a href="/" class="top-right-button">Home</a>
 
   <!-- Container for luxury watch cards -->
   <div class="container">
     <div class="row">
-      <!-- Card 1 -->
       {% for watch in watch_cate %}
-      <div class="col-md-4 mb-4">
-        <a href="{% url "watchdetails" watch.id %}" class="text-decoration-none">
-        <div class="card">
-          <img src="{{watch.Watch_image.url}}" class="card-img-top" alt="Luxury Watch 1">
-          <div class="card-body">
-            <h5 class="card-title">{{watch.name}}</h5>
-            <p class="card-text">{{watch.small_description}}</p>
-            <p class="price">{{watch.discounted_price}}</p>
-            <!-- Buy Now button (optional) -->
-          </div>
+        <div class="col-md-4 mb-4">
+          <a href="{% url 'watchdetails' watch.id %}" class="text-decoration-none">
+            <div class="card">
+              <img src="{{ watch.Watch_image.url }}" class="card-img-top" alt="Luxury Watch">
+              <div class="card-body">
+                <h5 class="card-title">{{ watch.name }}</h5>
+                <p class="card-text">{{ watch.small_description }}</p>
+                <p class="price">&#8377;{{ watch.discounted_price }}</p>
+                <!-- Add to Cart button -->
+              </div>
+            </div>
+          </a>
         </div>
-      </a>     
-    </div>
-{% endfor %}
+      {% endfor %}
     </div>
   </div>
 
