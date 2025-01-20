@@ -23,7 +23,7 @@
 /* Button Styles */
 .custom-btn {
   background-color: #f0ad4e; /* Warning color */
-  color: white; /* Text color */
+  color: rgb(0, 0, 0); /* Text color */
   border: 2px solid #f0ad4e; /* Border matching the background */
   border-radius: 25px; /* Rounded corners */
   padding: 10px 20px; /* Button padding */
@@ -34,7 +34,7 @@
 }
 
 .custom-btn:hover {
-  background-color: white; /* Change background to white */
+  background-color: rgb(0, 0, 0); /* Change background to white */
   color: #f0ad4e; /* Change text color to match border */
   border-color: #f0ad4e; /* Keep border color the same */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow effect */

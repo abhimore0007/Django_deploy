@@ -126,14 +126,26 @@
             margin-top: 50px;
         }
 
-        .empty-cart a {
-            color: #f39c12;
+        .go-shopping-btn {
+            display: inline-block;
+            background-color: #f39c12;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
             text-decoration: none;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        .empty-cart a:hover {
-            color: #e67e22;
+        .go-shopping-btn i {
+            font-size: 1.2rem;
+            margin-right: 5px;
+        }
+
+        .go-shopping-btn:hover {
+            background-color: #e67e22;
+            transform: translateY(-3px);
+            color: #fff;
         }
     </style>
 </head>
@@ -163,9 +175,13 @@
                                 <div class="cart-item-info">
                                     <h3 class="cart-item-name">{{ viewcart.product.name }}</h3>
                                     <div class="quantity-control">
-                                        <a href="{% url 'deletetoquantity' viewcart.id %}"><i class="fas fa-minus-circle"></i></a>
+                                        <a href="{% url 'deletetoquantity' viewcart.id %}">
+                                            <i class="fas fa-minus-circle"></i>
+                                        </a>
                                         <span>{{ viewcart.quantity }}</span>
-                                        <a href="{% url 'addtoquantity' viewcart.id %}"><i class="fas fa-plus-circle"></i></a>
+                                        <a href="{% url 'addtoquantity' viewcart.id %}">
+                                            <i class="fas fa-plus-circle"></i>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="cart-item-price">&#8377; {{ viewcart.price_and_quantity_total }}</div>
@@ -177,7 +193,10 @@
                         <a href="{% url 'Check_Out' %}" class="checkout-button">Proceed to Checkout</a>
                     {% else %}
                         <div class="empty-cart">
-                            <p>Your cart is empty. <a href="{% url 'categories' %}">Go Shopping</a></p>
+                            <p>Your cart is empty.</p>
+                            <a href="{% url 'categories' %}" class="go-shopping-btn">
+                                <i class="fas fa-shopping-bag"></i> Go Shopping
+                            </a>
                         </div>
                     {% endif %}
                 </div>

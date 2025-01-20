@@ -15,6 +15,16 @@ import uuid
 from django.urls import reverse
 #========================================================
 
+#================ Forgot Password ======================
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.template.loader import render_to_string
+from django.http import HttpResponse
+
 def base(request):
     return render(request,'core/index.html')  
 
@@ -96,7 +106,6 @@ def watch_details(request,id):
     watch_details=Watch.objects.get(pk=id)
     return render(request,'core/watch_details.html',{'watch_details':watch_details})
 
-from django.contrib import messages
 
 def Add_To_Cart(request, id):
     if request.user.is_authenticated:
@@ -148,10 +157,12 @@ def add_to_quantity(request, id):
 def delete_to_quantity(request, id):
     if request.user.is_authenticated:
         product = get_object_or_404(Cart, pk=id)
-        if product.quantity>1:
+        if product.quantity > 1:
             product.quantity -= 1
             product.save()
-            return redirect('viewCart')
+        else:
+            pass
+        return redirect('viewCart')
     else:
         return redirect('login')
     
@@ -339,6 +350,28 @@ def About_us(request):
     return render(request,"core/About_us.html")
 
 
+def Forgot_pass(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        user = User.objects.filter(email=email).first()
+        if user:
+            token = default_token_generator.make_token(user)
+            uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+            reset_url = request.build_absolute_uri(f'/reset_password/{uidb64}/{token}/')           
+            send_mail(
+                'Password Reset',
+                f'Click the following link to reset your password: {reset_url}',
+                'timezoneltd2024@gmail.com',  # Use a verified email address
+                [email],
+                fail_silently=False,
+            )
+            return redirect('passwordresetdone')
+        else:
+            messages.success(request,'please enter valid email address')
+    return render(request,"core/forgat_Password.html")
+
+def password_reset_done(request):
+    return render(request, 'core/Password_restart_Done.html')
 
 
     

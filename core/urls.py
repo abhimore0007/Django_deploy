@@ -30,8 +30,9 @@ urlpatterns = [
     path('buynow_payment/<int:id>',views.buynow_payment,name='buynowpayment'),
     path('buynow_payment_success/<int:selected_address_id>/<int:id>',views.buynow_payment_success,name='buynowpaymentsuccess'),
     path('Order_Page/',views.User_order,name="Order"),
-    path('About_Us/',views.About_us,name="About")
-    
+    path('About_Us/',views.About_us,name="About"),
+    path('Forgot_Pass/',views.Forgot_pass,name="Forgot_pass"),
+    path('password_reset_done/', views.password_reset_done, name='passwordresetdone'),   
    
 ]
 
