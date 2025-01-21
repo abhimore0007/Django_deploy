@@ -278,7 +278,7 @@ def payment_success(request,selected_address_id):
     address_data = Customer_Detail.objects.get(pk=selected_address_id)
     cart=Cart.objects.filter(user=request.user)
     for cart in cart:
-        Order(user=user,customer=address_data,quantity=cart.quantity,Watch=cart.product).save()
+        Order(user=user,customer=address_data,quantity=cart.quantity,Watchs=cart.product).save()
         cart.delete()
     return render(request,'core/payment_success.html')
 
