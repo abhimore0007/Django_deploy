@@ -161,7 +161,6 @@
   </style>
 </head>
 <body>
-  <!-- Sidebar -->
   <div class="sidebar">
     <h2>Dashboard</h2>
     <ul>
@@ -173,10 +172,8 @@
     </ul>
   </div>
 
-  <!-- Main Content -->
   <div class="main-content">
     <div class="card-container">
-      <!-- Add Address Card -->
       <a href="{% url 'Address_Add' %}">
         <div class="card add-card">
           <i class="bi bi-plus-circle add-icon"></i>
@@ -184,7 +181,6 @@
         </div>
       </a>
 
-      <!-- Address Cards -->
       {% for addre in address %}
         <div class="card address-card">
           <h3>Name: {{ addre.name }}</h3>

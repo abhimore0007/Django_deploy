@@ -71,7 +71,6 @@
     <div class="checkout-container">
         <h2 class="text-center mb-4">Checkout</h2>
         
-        <!-- Cart Summary -->
         <div class="cart-summary mb-4">
             <h5>Order Summary</h5>
             <div class="summary-card">
@@ -91,7 +90,6 @@
             </div>
         </div>
         
-        <!-- Address Selection -->
         <div class="address-selection mb-4">
             <h5>Select Address</h5>
             <form action="{% url "Payment" %}" method="POST">
@@ -107,8 +105,6 @@
                 <input type="submit" class="btn btn-primary btn-sm mt-2" value="Proceed to Payment">
             </form>
         </div>
-        
-        <!-- Place Order Button -->
     </div>
 {% endblock content %}
 </body>

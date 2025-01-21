@@ -99,7 +99,6 @@
 </head>
 
 <body>
-  <!-- Section: Design Block -->
   <section class="vh-100 background-section">
     <div class="container py-5 h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
@@ -115,34 +114,38 @@
                     <h2 class="fw-bold mb-4 text-center" style="color: #000000;">Register Form</h2>
                     {% csrf_token %}
                     
-                    {% if log.non_field_errors %}
-                    <div class="alert alert-danger">
-                      {% for error in log.non_field_errors %}
-                      <p>{{ error }}</p>
-                      {% endfor %}
-                    </div>
-                    {% endif %}
-                    
+                    <!-- Display Messages -->
                     {% if messages %}
-                    <div class="alert alert-danger">
                       {% for message in messages %}
-                      <p>{{ message }}</p>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                          {{ message }}
+                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                       {% endfor %}
-                    </div>
                     {% endif %}
                     
+                    <!-- Display Errors -->
+                    {% if log.non_field_errors %}
+                      <div class="alert alert-danger">
+                        {% for error in log.non_field_errors %}
+                          <p>{{ error }}</p>
+                        {% endfor %}
+                      </div>
+                    {% endif %}
+                    
+                    <!-- Form Fields -->
                     {% for reg in reg %}
-                    <div class="form-group mb-3">
-                      {{ reg }}
-                    </div>
+                      <div class="form-group mb-3">
+                        {{ reg }}
+                      </div>
                     {% endfor %}
                     
-                    <!-- Submit button -->
+                    <!-- Submit Button -->
                     <div class="pt-1 mb-4">
                       <button class="btn btn-primary btn-lg btn-block w-100" type="submit">Register</button>
                     </div>
 
-                    <!-- Additional Links -->
+                    <!-- Login Link -->
                     <div class="text-center">
                       <p class="mt-3" style="color: #393f81;">Already have an account? <a href="{% url "login" %}" style="color: #007bff;">Login here</a></p>
                     </div>
@@ -155,14 +158,13 @@
       </div>
     </div>
 
-    <!-- Top-right Button -->
+    <!-- Back Button -->
     <div class="top-right-btn">
       <a href="{% url 'base' %}">
         <button class="btn btn-secondary">Back</button>
       </a>
     </div>
   </section>
-  <!-- Section: Design Block -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

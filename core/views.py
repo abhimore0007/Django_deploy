@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import SetPasswordForm
 from .models import Watch,Cart,Customer_Detail,Order
 from datetime import date
-# Create your views here.
+from django.contrib.auth.decorators import login_required
+
 
 #===============For Paypal =========================
 from paypal.standard.forms import PayPalPaymentsForm
@@ -112,12 +113,9 @@ def Add_To_Cart(request, id):
         watch_cart = Watch.objects.get(pk=id)
         user = request.user
 
-        # Check if the product is already in the user's cart
         if Cart.objects.filter(user=user, product=watch_cart).exists():
-            # Add a message indicating the product is already added
             messages.warning(request, "Product already added to the cart.")
         else:
-            # Add the product to the cart
             Cart(user=user, product=watch_cart).save()
             messages.success(request, "Product added to the cart successfully.")
         
@@ -188,7 +186,7 @@ def Address_Add(request):
     if request.method == 'POST':
         add=Customer_Form(request.POST)
         if add.is_valid():
-            user=request.user                # user variable store the current user i.e steveroger
+            user=request.user               
             name= add.cleaned_data['name']
             address= add.cleaned_data['address']
             city= add.cleaned_data['city']
@@ -294,12 +292,12 @@ def User_order(request):
     ord= Order.objects.filter(user=request.user)
     return render(request,'core/Order.html',{'ord':ord,'current_date': current_date})
 
+@login_required(login_url='login')
 def Buy_now(request, id):
-    watch = Watch.objects.get(pk=id)     # cart_items will fetch product of current user, and show product available in the cart of the current user.
+    watch = Watch.objects.get(pk=id)    
     delhivery_charge = 2000
     
-    # Access the actual value of discounted_price
-    final_price = delhivery_charge + watch.discounted_price  # watch.discounted_price should directly return the value now
+    final_price = delhivery_charge + watch.discounted_price  
     
     address = Customer_Detail.objects.filter(user=request.user)
 
@@ -311,7 +309,7 @@ def buynow_payment(request,id):
     if request.method == 'POST':
         selected_address_id = request.POST.get('buynow_selected_address')
 
-    watch = Watch.objects.get(pk=id)     # cart_items will fetch product of current user, and show product available in the cart of the current user.
+    watch = Watch.objects.get(pk=id)     
     delhivery_charge =2000
     final_price= delhivery_charge + watch.discounted_price
     
@@ -340,7 +338,7 @@ def buynow_payment(request,id):
 def buynow_payment_success(request, selected_address_id, id):
     user = request.user
     customer_data = Customer_Detail.objects.get(pk=selected_address_id)
-    watch_instance = Watch.objects.get(pk=id)  # Rename the variable to avoid conflict
+    watch_instance = Watch.objects.get(pk=id)  
     Order(user=user, customer=customer_data, Watchs=watch_instance, quantity=1).save()
    
     return render(request, 'core/buynow_payment_success.html')
@@ -361,7 +359,7 @@ def Forgot_pass(request):
             send_mail(
                 'Password Reset',
                 f'Click the following link to reset your password: {reset_url}',
-                'timezoneltd2024@gmail.com',  # Use a verified email address
+                'timezoneltd2024@gmail.com', 
                 [email],
                 fail_silently=False,
             )

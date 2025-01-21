@@ -163,8 +163,8 @@
             .back-button {
                 display: block;
                 position: fixed;
-                top: 25px; /* Increased spacing */
-                right: 25px; /* Increased spacing */
+                top: 25px;
+                right: 25px;
                 background-color: #3498db;
                 color: #ffffff;
                 border: none;
@@ -205,30 +205,34 @@
         <main class="main-content w-100">
             <div class="container">
                 <h2>My Orders</h2>
-                {% for o in ord %}
-                    <div class="order-card">
-                        <div class="title">Purchase Receipt</div>
-                        <p>Current Date: {{ current_date }}</p>
-                        <div class="pricing">
-                            <div class="row">
-                                <span class="col">Watch: {{ o.Watchs.name }}</span>
-                                <span class="col text-end">₹ {{ o.Watchs.discounted_price }}</span>
+                {% if ord|length > 0 %}
+                    {% for o in ord %}
+                        <div class="order-card">
+                            <div class="title">Purchase Receipt</div>
+                            <p>Current Date: {{ current_date }}</p>
+                            <div class="pricing">
+                                <div class="row">
+                                    <span class="col">Watch: {{ o.Watchs.name }}</span>
+                                    <span class="col text-end">₹ {{ o.Watchs.discounted_price }}</span>
+                                </div>
+                                <div class="row">
+                                    <span class="col">Shipping:</span>
+                                    <span class="col text-end">₹ 2000</span>
+                                </div>
                             </div>
-                            <div class="row">
-                                <span class="col">Shipping:</span>
-                                <span class="col text-end">₹ 2000</span>
+                            <div class="total">Total: ₹ {{ o.Watchs.discounted_price|add:2000 }}</div>
+                            <div class="progress-track">
+                                <ul>
+                                    <li class="{% if o.status == 'PENDING' %}active{% endif %}">Pending</li>
+                                    <li class="{% if o.status == 'PROCESSING' %}active{% endif %}">Processing</li>
+                                    <li class="{% if o.status == 'COMPLETED' %}active{% endif %}">Completed</li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="total">Total: ₹ {{ o.Watchs.discounted_price|add:2000 }}</div>
-                        <div class="progress-track">
-                            <ul>
-                                <li class="{% if o.status == 'PENDING' %}active{% endif %}">Pending</li>
-                                <li class="{% if o.status == 'PROCESSING' %}active{% endif %}">Processing</li>
-                                <li class="{% if o.status == 'COMPLETED' %}active{% endif %}">Completed</li>
-                            </ul>
-                        </div>
-                    </div>
-                {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <p>No orders available.</p>
+                {% endif %}
             </div>
         </main>
     </div>

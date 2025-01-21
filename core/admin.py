@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Watch,Cart,Customer_Detail,Order
-# Register your models here.
+
 
 
 @admin.register(Watch)
