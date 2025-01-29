@@ -1,4 +1,5 @@
 {% load static %}
+{% block content %}
 <style>
     /* Wrapper settings for centering the content */
     .wrapper {
@@ -18,7 +19,7 @@
         text-align: center;
         text-transform: uppercase;
     }
-
+    
     /* Styling for the slider */
     .slider {
         height: 330px;
@@ -27,19 +28,19 @@
         position: relative;
         width: 80%;
     }
-
+    
     .slider .slide-track {
         animation: scroll 30s linear infinite;
         display: flex;
         width: calc(250px * 14);
     }
-
+    
     .slider .slide {
         height: 300px;
         width: 450px;
         margin-right: 20px; /* Add space between the slides */
     }
-
+    
     .slider .slide img {
         width: 100%; /* Full width of the slide */
         height: 100%; /* Make images fill the height */
@@ -47,7 +48,7 @@
         border-radius: 10px;
         border: 2px solid #bbb;
     }
-
+    
     /* Animation for the sliding effect */
     @keyframes scroll {
         0% { transform: translateX(0); }
@@ -84,6 +85,7 @@
 </div>
 
 
+{% endblock content %}
 
 
 

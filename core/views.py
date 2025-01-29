@@ -26,6 +26,7 @@ from django.utils.encoding import force_bytes, force_str
 from django.template.loader import render_to_string
 from django.http import HttpResponse
 
+
 def base(request):
     return render(request,'core/index.html')  
 
@@ -359,7 +360,7 @@ def Forgot_pass(request):
             send_mail(
                 'Password Reset',
                 f'Click the following link to reset your password: {reset_url}',
-                'timezoneltd2024@gmail.com', 
+                settings.EMAIL_HOST_USER, 
                 [email],
                 fail_silently=False,
             )
