@@ -158,6 +158,25 @@
         margin-left: 0;
       }
     }
+
+    /* Back Button Styling */
+    .back-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .back-btn:hover {
+      background-color: #0d7cd6;
+    }
+
   </style>
 </head>
 <body>
@@ -165,7 +184,7 @@
     <h2>Dashboard</h2>
     <ul>
       <li><a href="{% url 'Profile' %}" class="active">Profile</a></li>
-      <li><a href="#my-orders">My Orders</a></li>
+      <li><a href="{% url "Order" %}">My Orders</a></li>
       <li><a href="{% url 'changePassword' %}">Change Password</a></li>
       <li><a href="{% url 'AddressPage' %}">Address Book</a></li>
     </ul>
@@ -193,5 +212,11 @@
       {% endfor %}
     </div>
   </div>
+
+  <!-- Back Button -->
+  <a href="">
+    <button class="back-btn">Back</button>
+  </a>
+
 </body>
 </html>

@@ -1,172 +1,86 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bootstrap 5 Registration Form</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    /* General Styling */
-    body, html {
-      height: 100%;
-      font-family: Arial, sans-serif;
-    }
-  
-    /* Background Section */
-    .background-section {
-      background-image: url('{% static "core/imgs/register_backG.jpg" %}');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
-  
-    /* Dark Overlay */
-    .background-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1;
-    }
-
-    /* Card Styling */
-    .card {
-      border-radius: 1rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      position: relative;
-      z-index: 2;
-    }
-    
-    /* Form Image Styling */
-    .form-image {
-      height: 100%;
-      width: 100%;
-      border-radius: 1rem 0 0 1rem;
-      object-fit: cover;
-      box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
-  
-    /* Form Content Styling */
-    .card-body {
-      padding: 2rem;
-    }
-  
-    /* Button Styling */
-    .btn-primary {
-      background-color: #007bff;
-      border: none;
-      font-weight: bold;
-    }
-    .btn-primary:hover {
-      background-color: #0056b3;
-    }
-
-    /* Top-right Button Styling */
-    .top-right-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      z-index: 3;
-    }
-    .top-right-btn .btn-secondary {
-      font-weight: bold;
-      background-color: rgba(0, 0, 0, 0.6);
-      border: none;
-    }
-
-    /* Links and Text */
-    .text-center p {
-      color: #393f81;
-    }
-    .text-center a {
-      color: #007bff;
-      text-decoration: none;
-    }
-    .text-center a:hover {
-      text-decoration: underline;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .error {
+            color: red;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .btn-custom {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+        }
+        .btn-custom:hover {
+            background-color: #218838;
+            color: white;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .card-body {
+            padding: 2rem;
+            position: relative;
+        }
+        .bg-image {
+            background-image: url('{% static "core/imgs/register_img.jpg" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
 </head>
-
 <body>
-  <section class="vh-100 background-section">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col col-xl-8">
-          <div class="card">
-            <div class="row g-0">
-              <div class="col-md-6 col-lg-5 d-none d-md-block">
-                <img src="{% static 'core/imgs/register_img.jpg' %}" alt="register form" class="img-fluid form-image" />
-              </div>
-              <div class="col-md-6 col-lg-7 d-flex align-items-center">
-                <div class="card-body p-4 p-lg-5 text-black">
-                  <form action="" method="POST" novalidate>
-                    <h2 class="fw-bold mb-4 text-center" style="color: #000000;">Register Form</h2>
-                    {% csrf_token %}
-                    
-                    <!-- Display Messages -->
-                    {% if messages %}
-                      {% for message in messages %}
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                          {{ message }}
-                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <section class="vh-100 bg-image d-flex align-items-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card rounded-3 shadow-lg">
+                        <div class="card-body">
+                            <a href="{% url "base" %}" class="btn btn-outline-secondary back-button">Back</a>
+                            <h2 class="text-uppercase text-center mb-4">Create an Account</h2>
+                            <form method="POST">
+                                {% csrf_token %}
+                                {% for field in reg %}
+                                    <div class="form-group">
+                                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                                        {{ field }}
+                                        {% if field.errors %}
+                                            <div class="error">{{ field.errors.0 }}</div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                                <button type="submit" class="btn btn-custom w-100">Register</button>
+                            </form>
                         </div>
-                      {% endfor %}
-                    {% endif %}
-                    
-                    <!-- Display Errors -->
-                    {% if log.non_field_errors %}
-                      <div class="alert alert-danger">
-                        {% for error in log.non_field_errors %}
-                          <p>{{ error }}</p>
-                        {% endfor %}
-                      </div>
-                    {% endif %}
-                    
-                    <!-- Form Fields -->
-                    {% for reg in reg %}
-                      <div class="form-group mb-3">
-                        {{ reg }}
-                      </div>
-                    {% endfor %}
-                    
-                    <!-- Submit Button -->
-                    <div class="pt-1 mb-4">
-                      <button class="btn btn-primary btn-lg btn-block w-100" type="submit">Register</button>
                     </div>
-
-                    <!-- Login Link -->
-                    <div class="text-center">
-                      <p class="mt-3" style="color: #393f81;">Already have an account? <a href="{% url "login" %}" style="color: #007bff;">Login here</a></p>
-                    </div>
-                  </form>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Back Button -->
-    <div class="top-right-btn">
-      <a href="{% url 'base' %}">
-        <button class="btn btn-secondary">Back</button>
-      </a>
-    </div>
-  </section>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </section>
+    
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
-
 </html>

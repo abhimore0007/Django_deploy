@@ -1,9 +1,17 @@
+/* General Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  height: 100%;
+  width: 100%;
+}
 
-/* Hero 1 css start */
+/* Hero Section */
 .first-hero-text {
   background-color: black;
   color: white;
-  padding: 20px; /* Add some padding */
+  padding: 20px;
 }
 
 #HeroTitle {
@@ -15,114 +23,66 @@
 }
 
 .first-hero-img {
-  height: auto; /* Set height to auto */
-  max-width: 100%; /* Ensure image doesn't overflow */
-  padding-top: 150px;
+  height: auto;
+  max-width: 100%;
 }
 
 /* Button Styles */
 .custom-btn {
-  background-color: #f0ad4e; /* Warning color */
-  color: rgb(0, 0, 0); /* Text color */
-  border: 2px solid #f0ad4e; /* Border matching the background */
-  border-radius: 25px; /* Rounded corners */
-  padding: 10px 20px; /* Button padding */
-  font-size: 16px; /* Font size */
-  font-weight: bold; /* Bold text */
-  text-transform: uppercase; /* Uppercase text */
-  transition: all 0.3s ease; /* Smooth hover effect */
+  background-color: #f0ad4e;
+  color: black;
+  border: 2px solid #f0ad4e;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
 }
 
 .custom-btn:hover {
-  background-color: rgb(0, 0, 0); /* Change background to white */
-  color: #f0ad4e; /* Change text color to match border */
-  border-color: #f0ad4e; /* Keep border color the same */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Add shadow effect */
-}
-
-.custom-btn:focus {
-  outline: none; /* Remove focus outline */
-  box-shadow: 0 0 5px rgba(240, 173, 78, 0.8); /* Focus shadow */
-}
-
-
-/* hero 1 css end */
-
-/* second hero css start */
-
-.second-hero-img{
-  color: white;
-  padding-top: 10px;
-}
-
-.second-hero-img h1{
-  font-size: 5rem;
-  color: rgb(205, 104, 33);
-}
-
-.second-hero-img p{
-  font-size: 1.5rem;
-}
-
-.second-hero{
-  padding-top: 90px;
   background-color: black;
-  padding-bottom: 130px;
+  color: #f0ad4e;
+  border-color: #f0ad4e;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* second hero css end */
+/* Second Hero Section */
+.second-hero {
+  padding: 90px 0 100px; /* Reduced bottom padding */
+  background-color: black;
+}
 
-/* video css start */
-
+/* Video Section */
 .video-section {
-  background-color: black; /* Set background color to black */
-      padding: 20px 0; /* Add some vertical padding */
-    }
-    
-    .video-section video {
-      width: 99%; /* Ensure the video takes full width */
-      height: auto; /* Maintain aspect ratio */
-    }
-    
-    
-    .video-section {
-      position: relative;
-      overflow: hidden;
-    }
-    .video-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white; /* Text color */
-      text-align: center;
-      z-index: 2; /* Ensure text is above video */
-    }
-    
-/* video css end */
+  background-color: black;
+  padding: 10px 0;
+}
 
-/* photo curosal css start */
- /* Wrapper settings for centering the content */
- .wrapper {
+.video-section video {
+  width: 100%;
+  height: auto;
+}
+
+/* Photo Carousel */
+.wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 95vh;
-  background-color: black; /* Black background for the whole section */
-  flex-direction: column; /* Stack heading and slider vertically */
+  min-height: 95vh;
+  background-color: black;
+  flex-direction: column;
+  width: 100%;
 }
 
-/* Styling for the heading */
 .slider-heading {
   color: white;
   font-size: 2.5rem;
   font-weight: bolder;
-  /* margin-bottom: 20px; Add spacing between the heading and slider */
   text-align: center;
   text-transform: uppercase;
 }
 
-/* Styling for the slider */
 .slider {
   height: 330px;
   margin: auto;
@@ -140,99 +100,78 @@
 .slider .slide {
   height: 300px;
   width: 450px;
-  margin-right: 20px; /* Add space between the slides */
+  margin-right: 20px;
 }
 
 .slider .slide img {
-  width: 100%; /* Full width of the slide */
-  height: 100%; /* Make images fill the height */
-  object-fit: cover; /* Make sure the images cover the space without distortion */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 10px;
   border: 2px solid #bbb;
 }
 
-/* Animation for the sliding effect */
+/* Scrolling Animation */
 @keyframes scroll {
   0% { transform: translateX(0); }
   100% { transform: translateX(calc(-250px * 7)); }
 }
 
-/* photo curosal css end */
-
-/* services css start */
-/* Section Background and Padding */
+/* Services Section */
 .bsb-service-7 {
-    border-radius: 30px;
-    padding-bottom: 70px;
+  border-radius: 30px;
+  padding-bottom: 70px;
 }
 
-/* Service Title */
 .service-title {
-    color: white;
-    font-size: 2rem;
-    margin-bottom: 20px;
+  color: white;
+  font-size: 3rem;
+  margin-bottom: 20px;
 }
 
-/* Service Container */
 .service-container {
-    border: 1px solid #ddd;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 30px;
-    background-color: rgb(0, 0, 0);
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
+  background-color: black;
+  padding: 20px;
 }
 
-/* Card Styling */
 .card {
-    background: transparent;
-    border: none;
+  background: transparent;
+  border: none;
 }
 
 .card-body {
-    padding: 40px 20px;
+  padding: 40px 20px;
 }
 
 .card-title {
-    font-weight: bold;
-    font-size: 1.25rem;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    color: rgb(255, 255, 255);
+  font-weight: bold;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: white;
 }
 
 .card-text {
-    color: #666;
-    font-size: 0.95rem;
+  color: #ccc;
+  font-size: 0.95rem;
 }
 
-/* Icon Styling */
 .icon {
-    font-size: 56px;
-    color: #ffc107;
-    margin-bottom: 20px;
+  font-size: 56px;
+  color: #ffc107;
+  margin-bottom: 20px;
 }
 
-/* Utility Classes */
-.text-center {
-    text-align: center;
+/* Footer */
+footer {
+  background-color: black;
+  color: white;
+  padding: 20px 0;
 }
 
-.p-0 {
-    padding: 0;
-}
-
-/* services css end */
-
-
-/* footer css start */
-
- /* Footer background and text styling */
- footer {
-  background-color: black; /* Black background for footer */
-  color: white; /* White text for contrast */
-  padding-top: 20px;
-}
-
-/* Section headings */
 footer h6 {
   font-size: 1.2rem;
   font-weight: bold;
@@ -240,45 +179,59 @@ footer h6 {
   margin-bottom: 15px;
 }
 
-/* Paragraph and links styling */
 footer p, footer a {
-  color: #dcdcdc; /* Light gray for text */
+  color: #dcdcdc;
   font-size: 0.9rem;
   text-decoration: none;
 }
 
 footer a:hover {
-  color: #f4c10f; /* Gold color on hover for links */
+  color: #f4c10f;
 }
 
-/* Social media buttons styling */
 .btn-floating {
-  background-color: #f4c10f; /* Gold buttons */
+  background-color: #f4c10f;
   color: black;
   border: none;
 }
 
 .btn-floating:hover {
-  background-color: white; /* White on hover */
+  background-color: white;
   color: black;
 }
 
-/* Horizontal divider styling */
 hr {
-  border-top: 1px solid #444; /* Subtle divider */
+  border-top: 1px solid #444;
   margin: 20px 0;
 }
 
-/* Responsiveness */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-  footer h6 {
-      font-size: 1rem;
+  .service-title {
+    font-size: 2.5rem;
   }
+
+  .service-container {
+    padding: 15px 0;
+  }
+
+  .card-body {
+    padding: 30px 15px;
+  }
+
+  .slider {
+    height: 250px;
+  }
+
+  .slider .slide {
+    height: 220px;
+  }
+
+  footer h6 {
+    font-size: 1rem;
+  }
+
   footer p {
-      font-size: 0.8rem;
+    font-size: 0.8rem;
   }
 }
-/* footer css end */
-    
-
-

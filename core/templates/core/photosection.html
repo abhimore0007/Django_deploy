@@ -6,7 +6,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 95vh;
+        height: 35vh;
         background-color: black; /* Black background for the whole section */
         flex-direction: column; /* Stack heading and slider vertically */
     }
@@ -14,52 +14,101 @@
     /* Styling for the heading */
     .slider-heading {
         color: white;
-        font-size: 2.5rem;
+        font-size: 2rem;
         font-weight: bolder;
         text-align: center;
         text-transform: uppercase;
+        margin-bottom: 0; /* Removed extra bottom margin */
     }
-    
+
     /* Styling for the slider */
     .slider {
-        height: 330px;
-        margin: auto;
+        width: 90%;
         overflow: hidden;
         position: relative;
-        width: 80%;
+        max-width: 1200px;
+        
     }
-    
+
     .slider .slide-track {
-        animation: scroll 30s linear infinite;
         display: flex;
+        animation: scroll 30s linear infinite;
         width: calc(250px * 14);
     }
-    
+
     .slider .slide {
-        height: 300px;
-        width: 450px;
-        margin-right: 20px; /* Add space between the slides */
+        width: 300px; /* Responsive width */
+        height: auto;
+        margin-right: 15px;
+        flex-shrink: 0;
     }
-    
+
     .slider .slide img {
-        width: 100%; /* Full width of the slide */
-        height: 100%; /* Make images fill the height */
-        object-fit: cover; /* Make sure the images cover the space without distortion */
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
         border-radius: 10px;
         border: 2px solid #bbb;
     }
-    
+
     /* Animation for the sliding effect */
     @keyframes scroll {
         0% { transform: translateX(0); }
-        100% { transform: translateX(calc(-250px * 7)); }
+        100% { transform: translateX(calc(-300px * 7)); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+        .slider-heading {
+            font-size: 1.8rem;
+        }
+        .slider {
+            width: 95%;
+        }
+        .slider .slide {
+            width: 250px;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-250px * 7)); }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .slider-heading {
+            font-size: 1.5rem;
+        }
+        .slider {
+            width: 100%;
+        }
+        .slider .slide {
+            width: 200px;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-200px * 7)); }
+        }
+    }
+
+    @media (max-width: 480px) {
+        .slider-heading {
+            font-size: 1.2rem;
+        }
+        .slider {
+            width: 100%;
+        }
+        .slider .slide {
+            width: 150px;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-150px * 7)); }
+        }
     }
 </style>
 
-
 <div class="wrapper">
     <h1 class="slider-heading">Our Brand Logos</h1>
-    
     <div class="slider">
         <div class="slide-track">
             <div class="slide">
@@ -84,9 +133,4 @@
     </div>
 </div>
 
-
 {% endblock content %}
-
-
-
-

@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate,login,logout,update_session_auth_ha
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import SetPasswordForm
-from .models import Watch,Cart,Customer_Detail,Order
+from .models import Watch,Cart,Customer_Detail,Order,OrderItem
 from datetime import date
 from django.contrib.auth.decorators import login_required
 
@@ -32,14 +32,19 @@ def base(request):
 
 def register(request):
     if request.method == 'POST':
-        reg=RegisterForm(request.POST)
+        reg = RegisterForm(request.POST)
         if reg.is_valid():
             reg.save()
-            messages.success(request,'Registration Successfully !!')
-            return redirect('register')
+            messages.success(request, 'Registration Successful!!')
+            return redirect('login')  # Redirect after successful registration
+        else:
+            # If the form is not valid, the error messages will be passed to the template
+            messages.error(request, 'Please correct the errors below.')
     else:
-        reg=RegisterForm()
-    return render(request,'core/register_form.html',{'reg':reg})
+        reg = RegisterForm()
+
+    return render(request, 'core/register_form.html', {'reg': reg})
+
 
 def user_login(request):
     if not request.user.is_authenticated:
@@ -100,9 +105,21 @@ def User_Password_forgot_Form(request):
         return redirect('Login')
     
 
-def User_categories(request):
-    watch_cate=Watch.objects.all()
+def main_categories(request):
+    watch_cate=Watch.objects.order_by("?")
     return render(request,'core/categories.html',{'watch_cate':watch_cate})
+
+def Sport_categories(request):
+    watch_cate=Watch.objects.filter(category='Sport')
+    return render(request,'core/Sport_categories.html',{'watch_cate':watch_cate})
+
+def Luxury_categories(request):
+    watch_cate=Watch.objects.filter(category='Luxury')
+    return render(request,'core/Luxury_categories.html',{'watch_cate':watch_cate})
+
+def Smart_categories(request):
+    watch_cate=Watch.objects.filter(category='Smart')
+    return render(request,'core/Smart_categories.html',{'watch_cate':watch_cate})
 
 def watch_details(request,id):
     watch_details=Watch.objects.get(pk=id)
@@ -115,12 +132,12 @@ def Add_To_Cart(request, id):
         user = request.user
 
         if Cart.objects.filter(user=user, product=watch_cart).exists():
-            messages.warning(request, "Product already added to the cart.")
+            pass
         else:
             Cart(user=user, product=watch_cart).save()
             messages.success(request, "Product added to the cart successfully.")
         
-        return redirect('watchdetails', id)
+        return redirect('viewCart')
     else:
         return redirect('login')
 
@@ -230,21 +247,40 @@ def delete_Add(request,id):
 
 def Check_Out(request):
     if request.user.is_authenticated:
-        watch_view=Cart.objects.filter(user=request.user)
-        total=0
-        delivery_charges=3000
+        # Retrieve the cart items for the user
+        watch_view = Cart.objects.filter(user=request.user)
+        
+        total = 0
+        delivery_charges = 3000
+        
+        # Calculate the total price of the cart items
         for viewcart in watch_view:
-            total+=(viewcart.product.discounted_price*viewcart.quantity)
-        final_price =total+delivery_charges
+            total += (viewcart.product.discounted_price * viewcart.quantity)
+        
+        # Final price including delivery charges
+        final_price = total + delivery_charges
+        
+        # Retrieve the user's address details
         address = Customer_Detail.objects.filter(user=request.user)
-        return render(request,'core/checkout.html',{'total':total,'final_price':final_price,'address':address})
+        
+        # If address doesn't exist for the user, redirect to the add address page
+        # if not address.exists():
+        #     return redirect('Address_Add')  # Replace 'Address_Add' with the actual URL name for adding address
+        
+        # If address exists, proceed with the checkout page rendering
+        return render(request, 'core/checkout.html', {'total': total, 'final_price': final_price, 'address': address})
+    
     else:
+        # Redirect to login page if the user is not authenticated
         return redirect('login')
     
 
 def Payment(request):
         if request.method == 'POST':
             selected_address_id = request.POST.get('selected_address')
+            if not selected_address_id:
+                messages.error(request, 'Please select an address to proceed.')
+                return redirect('Address_Add')
 
         watch_view=Cart.objects.filter(user=request.user)
         total=0
@@ -273,15 +309,20 @@ def Payment(request):
     #================= Paypal Code  End =====================
         return render(request,'core/payment_page.html',{'paypal':paypal_payment})
 
-def payment_success(request,selected_address_id):
-
-    user= request.user
+def payment_success(request, selected_address_id):
+    user = request.user
     address_data = Customer_Detail.objects.get(pk=selected_address_id)
-    cart=Cart.objects.filter(user=request.user)
-    for cart in cart:
-        Order(user=user,customer=address_data,quantity=cart.quantity,Watchs=cart.product).save()
+    cart_items = Cart.objects.filter(user=request.user)
+
+    # Create a single order
+    order = Order.objects.create(user=user, customer=address_data)
+
+    # Add products to OrderItem and remove from cart
+    for cart in cart_items:
+        OrderItem.objects.create(order=order, watch=cart.product, quantity=cart.quantity)
         cart.delete()
-    return render(request,'core/payment_success.html')
+
+    return render(request, 'core/payment_success.html', {'order': order})
 
 
 def payment_failed(request):
@@ -290,8 +331,10 @@ def payment_failed(request):
 
 def User_order(request):
     current_date = date.today()
-    ord= Order.objects.filter(user=request.user)
-    return render(request,'core/Order.html',{'ord':ord,'current_date': current_date})
+    orders = Order.objects.filter(user=request.user).prefetch_related('items__watch')
+    for i in orders:
+        print(i.items.all())
+    return render(request, 'core/Order.html', {'orders': orders, 'current_date': current_date})
 
 @login_required(login_url='login')
 def Buy_now(request, id):
@@ -309,6 +352,9 @@ def buynow_payment(request,id):
 
     if request.method == 'POST':
         selected_address_id = request.POST.get('buynow_selected_address')
+        if not selected_address_id:
+                messages.error(request, 'Please select an address to proceed.')
+                return redirect('Address_Add')
 
     watch = Watch.objects.get(pk=id)     
     delhivery_charge =2000
@@ -340,9 +386,10 @@ def buynow_payment_success(request, selected_address_id, id):
     user = request.user
     customer_data = Customer_Detail.objects.get(pk=selected_address_id)
     watch_instance = Watch.objects.get(pk=id)  
-    Order(user=user, customer=customer_data, Watchs=watch_instance, quantity=1).save()
+    order = Order.objects.create(user=user, customer=customer_data)
+    OrderItem(order=order, watch=watch_instance, quantity=1).save()
    
-    return render(request, 'core/buynow_payment_success.html')
+    return redirect(reverse('Order'))
 
 
 def About_us(request):

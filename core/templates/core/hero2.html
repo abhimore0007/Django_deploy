@@ -1,34 +1,40 @@
 {% block content %}
 {% load static %}
+<link rel="stylesheet" href="{% static 'core/css/style.css' %}?v=1">
+
 <style>
     /* General Styles */
     .second-hero {
-        min-height: 320px; /* Set the height to 320px */
+        min-height: 320px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #000; /* Black background */
-        color: #fff; /* White text */
+        background-color: #000;
+        color: #fff;
         position: relative;
         overflow: hidden;
-        padding: 0 15px; /* Add padding */
-        flex-wrap: wrap; /* Allow content to wrap in smaller screens */
+        padding: 40px 15px;
+        flex-wrap: wrap;
     }
 
-    .second-hero-img h1 {
-        font-size: 2rem; /* Adjust font size */
+    .second-hero-img {
+        text-align: left;
+    }
+
+    .second-hero-img h4 {
+        font-size: 4rem;
         font-weight: 700;
-        color: #fff; /* White color for heading */
-        margin-bottom: 10px; /* Reduce margin */
-        line-height: 1.2; /* Adjust line height */
+        color: #ff7b00;
+        margin-bottom: 10px;
+        line-height: 1.2;
     }
 
     .second-hero-img p {
-        font-size: 1.1rem; /* Adjust font size */
-        color: #ddd; /* Light gray for paragraph */
+        font-size: 1.1rem;
+        color: #ddd;
         max-width: 500px;
-        margin-bottom: 15px; /* Reduce margin */
-        line-height: 1.4; /* Adjust line height */
+        margin-bottom: 15px;
+        line-height: 1.4;
     }
 
     .col-md-6 img {
@@ -44,77 +50,72 @@
     }
 
     /* Responsive Styles */
-    /* For screens less than 1200px (smaller laptops and tablets) */
     @media (max-width: 1200px) {
         .second-hero {
-            padding: 0 20px;
+            padding: 30px 20px;
         }
-
-        .second-hero-img h1 {
-            font-size: 1.6rem;
+        .second-hero-img h4 {
+            font-size: 2.7rem;
         }
-
         .second-hero-img p {
             font-size: 1rem;
         }
     }
 
-    /* For screens less than 768px (tablets and large phones) */
-    @media (max-width: 768px) {
+    @media (max-width: 992px) {
         .second-hero {
             flex-direction: column;
             text-align: center;
+            padding: 20px;
         }
-
-        .second-hero-img h1 {
-            font-size: 2rem;
+        .second-hero-img {
+            text-align: center;
         }
-
+        .second-hero-img h4 {
+            font-size: 2.4rem;
+        }
         .second-hero-img p {
             font-size: 1rem;
-            margin-bottom: 15px;
-        }
-
-        .col-md-6 {
-            max-width: 100%;
-            margin-bottom: 20px;
+            max-width: 90%;
+            margin: 0 auto;
         }
     }
 
-    /* For screens less than 480px (small phones) */
-    @media (max-width: 480px) {
-        .second-hero-img h1 {
-            font-size: 1.4rem; /* Smaller heading for small screens */
+    @media (max-width: 768px) {
+        .second-hero-img h4 {
+            font-size: 2.7rem;
         }
-
         .second-hero-img p {
-            font-size: 0.9rem; /* Smaller text for small screens */
-            margin-bottom: 10px;
+            font-size: 0.95rem;
         }
     }
 
-    /* For screens less than 320px (very small phones) */
-    @media (max-width: 320px) {
-        .second-hero-img h1 {
-            font-size: 1rem; /* Further reduce font size */
+    @media (max-width: 576px) {
+        .second-hero-img h4 {
+            font-size: 2.4rem;
         }
-
         .second-hero-img p {
-            font-size: 0.8rem;
-            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .second-hero-img h4 {
+            font-size: 2.4rem;
+        }
+        .second-hero-img p {
+            font-size: 0.85rem;
         }
     }
 </style>
 
-<link rel="stylesheet" href="{% static 'core/css/style.css' %}?v=1">
-
-<div class="container-fluid" style="padding: 0;">
+<div class="container-fluid p-0">
     <div class="row align-items-center second-hero">
-        <div class="col-md-6" style="padding: 15px;">
+        <div class="col-md-6 p-3 text-center">
             <img src="{% static 'core/imgs/heroimg.jpg' %}" alt="Luxury Watch" class="img-fluid">
         </div>
-        <div class="col-md-6 second-hero-img" style="text-align: left; padding: 15px;">
-            <h1 id="secondHeroTitle">Why TimeZone?</h1>
+        <div class="col-md-6 second-hero-img p-3">
+            <h4 id="secondHeroTitle">Why TimeZone?</h4>
             <p>Our luxury watches combine classic style and top-quality craftsmanship, making every moment special.</p>
         </div>
     </div>

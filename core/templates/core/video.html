@@ -2,19 +2,35 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'core/css/style.css' %}?v=1">
 
-
-  <div id="videoCarousel" class="carousel slide video-section bg-black py-4" data-bs-ride="carousel">
+<div id="videoCarousel" class="carousel slide video-section bg-black py-4" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-          <div class="embed-responsive embed-responsive-16by9">
-                <video class="embed-responsive-item" autoplay muted loop>
-                  <source src="{% static "core/imgs/Cinematic Watch Product Video Commercial Example _ Rolex Timex Omega Samsung Apple Jewelry Amazon Ad.mp4" %}" type="video/mp4">
+            <div class="position-relative w-100">
+                <video class="w-100 d-block" autoplay muted loop>
+                    <source src="{% static 'core/imgs/Cinematic Watch Product Video Commercial Example _ Rolex Timex Omega Samsung Apple Jewelry Amazon Ad.mp4' %}" type="video/mp4">
                 </video>
-                <div class="video-text">
-                    <h2>Discover Timeless Elegance in Our Luxury Watch Collection.</h2>
+                <div class="video-text position-absolute top-50 start-50 translate-middle text-center text-white p-3">
+                    <h2 class="fw-bold">Discover Timeless Elegance in Our Luxury Watch Collection.</h2>
                 </div>
-              </div>
+            </div>
         </div>
     </div>
-  </div>
-  {% endblock content %}
+</div>
+
+<style>
+    .video-section {
+        position: relative;
+        max-width: 100%;
+        overflow: hidden;
+    }
+    video {
+        object-fit: cover;
+        max-height: 80vh;
+    }
+    .video-text {
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+    }
+</style>
+
+{% endblock content %}

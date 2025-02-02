@@ -27,56 +27,76 @@
             color: #dc3545;
             font-size: 0.9rem;
         }
+
+        /* Back Button Styling */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
     </style>
 </head>
 
 <body>
     <section class="vh-100" style="background-color: rgb(0, 0, 0);">
-        <div class="container py-5 h-100">
+        <div class="container py-5 h-100 position-relative">
+            <!-- Back Button -->
+            <a href="{% url 'base' %}" class="btn btn-outline-light back-button">Back</a>
+
             <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col col-xl-8">
+                <div class="col-xl-8">
                     <div class="card" style="border-radius: 1rem; box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);">
                         <div class="row g-0">
-                            <div class="col-md-6 col-lg-5 d-none d-md-block">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
-                                    alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                            <div class="col-md-6 d-none d-md-block">
+                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp" alt="Login Form"
+                                    class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
                             </div>
-                            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                            <div class="col-md-6 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
-                                    <form action="" method="POST" novalidate>
-                                        <h2 class="fw-bold mb-4 text-center" style="color: #000000;">Login Form</h2>
+                                    <form action="" method="post" novalidate>
                                         {% csrf_token %}
-                                        
+                                        <h2 class="fw-bold mb-4 text-center" style="color: #000000;">Login</h2>
+
                                         {% if log.non_field_errors %}
                                             <div class="alert alert-danger">
                                                 {% for error in log.non_field_errors %}
-                                                    <p>{{ error }}</p>
+                                                    {{ error }}
                                                 {% endfor %}
                                             </div>
                                         {% endif %}
-                                        
+
                                         {% if messages %}
                                             <div class="alert alert-danger">
                                                 {% for message in messages %}
-                                                    <p>{{ message }}</p>
+                                                    {{ message }}
                                                 {% endfor %}
                                             </div>
                                         {% endif %}
 
                                         {% for field in log %}
                                             <div class="form-group mb-3">
-
+                                                {{ field.label_tag }}
                                                 {{ field }}
+                                                {% if field.errors %}
+                                                    <div class="error-message">
+                                                        {% for error in field.errors %}
+                                                            <p>{{ error }}</p>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
                                             </div>
                                         {% endfor %}
 
-                                        <div class="pt-1 mb-4 text-center">
-                                            <button class="btn btn-primary btn-lg btn-block w-100" type="submit">Login</button>
+                                        <div class="text-center mb-4">
+                                            <button class="btn btn-primary btn-lg w-100" type="submit">Login</button>
                                         </div>
 
                                         <div class="text-center">
-                                            <a class="small text-muted" href="{% url "Forgot_pass" %}">Forgot password?</a>
-                                            <p class="mt-3" style="color: #393f81;">Don't have an account? <a href="{% url "register" %}" style="color: #007bff;">Register here</a></p>
+                                            <a class="small text-muted" href="{% url 'Forgot_pass' %}">Forgot password?</a>
+                                            <p class="mt-3" style="color: #393f81;">
+                                                Don't have an account?
+                                                <a href="{% url 'register' %}" style="color: #007bff;">Register here</a>
+                                            </p>
                                         </div>
                                     </form>
                                 </div>

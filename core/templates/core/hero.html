@@ -3,18 +3,60 @@
 
 <link rel="stylesheet" href="{% static 'core/css/style.css' %}?v=1">
 
+<style>
+    /* Ensure the image is fully responsive */
+    .first-hero-img img {
+        width: 100%;
+        height: auto;
+        pointer-events: none; /* Disables hover interactions */
+        transition: none !important; /* Removes hover animations */
+    }
+
+    /* Override any hover effect */
+    .first-hero-img img:hover {
+        transform: none !important;
+        opacity: 1 !important;
+    }
+
+    @media (max-width: 576px) {
+        .first-hero-img img {
+            padding: 39px;
+            width: 100%; /* Make the image take full width */
+            height: 500px; /* Set a fixed height */
+            object-fit: cover; /* Maintain aspect ratio while filling the container */
+        }
+    }
+
+    @media (max-width: 400px) {
+        .first-hero-img img {
+            padding: 20px; /* Adjust padding as needed */
+            width: 120%; /* Increase the size to 120% of the container */
+            height: 300px; /* Set a fixed height */
+            object-fit: cover; /* Maintain aspect ratio while filling the container */
+        }
+    }
+</style>
+
 <div class="container-fluid">
-    <div class="row align-items-center first-hero-text">
-        <div class="col-md-6">
-            <h1 id="HeroTitle">A Watch For Every Journey,<br><span> Every Occasion</span></h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lacinia odio vitae vestibulum.</p>
+    <div class="row align-items-center first-hero-text py-5">
+        <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
+            <h1 id="HeroTitle" class="fw-bold">
+                A Watch For Every Journey,<br>
+                <span>Every Occasion</span>
+            </h1>
+            <p class="mt-3">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam lacinia odio vitae vestibulum.
+            </p>
             <a href="{% url 'categories' %}">
-                <button class="btn custom-btn">Shop Now</button>
+                <button class="btn custom-btn mt-2">Shop Now</button>
             </a>
         </div>
-        <div class="col-md-6 first-hero-img">
-            <img src="{% static 'core/imgs/43-Greubel_Forsey_Brands.jpg' %}" alt="Description" class="img-fluid">
+        <div class="col-lg-6 col-md-6 col-sm-12 d-flex justify-content-center first-hero-img">
+            <img src="{% static 'core/imgs/43-Greubel_Forsey_Brands.jpg' %}" 
+                 alt="Luxury Watch" 
+                 class="img-fluid">
         </div>
     </div>
 </div>
+
 {% endblock content %}
