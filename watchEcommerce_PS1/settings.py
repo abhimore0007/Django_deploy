@@ -129,7 +129,7 @@ DEFAULT_FROM_EMAIL = 'abhishekmore504@gmail.com'  # Your Gmail address (or a ver
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR/'media'
+ROOT = BASE_DIR/'media'
 
 
 PAYPAL_RECEIVER_EMAIL = 'sb-ybz8r34323332@business.example.com' # where cash is paid into i.e Merchant receiver mail

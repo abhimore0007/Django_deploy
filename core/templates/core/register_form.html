@@ -61,6 +61,14 @@
                             <h2 class="text-uppercase text-center mb-4">Create an Account</h2>
                             <form method="POST">
                                 {% csrf_token %}
+                                {% if reg.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in reg.non_field_errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                                
                                 {% for field in reg %}
                                     <div class="form-group">
                                         <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
@@ -73,6 +81,9 @@
                                 <button type="submit" class="btn btn-custom w-100">Register</button>
                             </form>
                         </div>
+                        <p class="text-center mt-3">
+                            Already have an account? <a href="{% url 'login' %}">Login here</a>
+                        </p>                        
                     </div>
                 </div>
             </div>

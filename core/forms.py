@@ -33,13 +33,13 @@ class RegisterForm(UserCreationForm):
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get('first_name')
-        if not first_name.isalpha():  # Checks if it contains only letters
+        if not first_name.isalpha():  
             raise forms.ValidationError("First name should contain only letters.")
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data.get('last_name')
-        if not last_name.isalpha():  # Checks if it contains only letters
+        if not last_name.isalpha(): 
             raise forms.ValidationError("Last name should contain only letters.")
         return last_name
     
@@ -75,5 +75,5 @@ class Customer_Form(forms.ModelForm):
                   'address':forms.TextInput(attrs={'class':'form-control'}),
                   'city':forms.TextInput(attrs={'class':'form-control'}),
                   'state':forms.Select(attrs={'class':'form-control'}),
-                  'pincode':forms.NumberInput(attrs={'class':'form-control'}),
+                  'pincode':forms.NumberInput(attrs={'class':'form-control'}),   
                   }

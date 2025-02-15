@@ -226,9 +226,7 @@
 <body>
     <!-- Top Navigation -->
     <div class="top-nav">
-        <a href="">Home</a>
-        <a href="">Shopping</a>
-        <a href="">Profile</a>
+        <a href="javascript:history.back()">back</a>
     </div>
 
     <div class="container mt-5">
@@ -264,7 +262,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="cart-item-price">&#8377; {{ viewcart.price_and_quantity_total }}</div>
+                                <div class="cart-item-price">&#36;{{ viewcart.price_and_quantity_total }}</div>
                                 <a href="{% url 'deletetheCart' viewcart.id %}" class="cart-item-delete">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>

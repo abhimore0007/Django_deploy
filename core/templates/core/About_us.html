@@ -107,6 +107,27 @@
     }
 
     /* Responsive Design */
+    @media (max-width: 1200px) {
+        .about-container {
+            padding: 20px;
+        }
+
+        .info-card {
+            width: 45%;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .info-card {
+            width: 45%;
+        }
+
+        .explore-btn {
+            font-size: 0.9rem;
+            padding: 10px 20px;
+        }
+    }
+
     @media (max-width: 768px) {
         .info-section {
             flex-direction: column;
@@ -114,7 +135,35 @@
         }
 
         .info-card {
+            width: 80%;
+        }
+
+        .about-container h1 {
+            font-size: 2rem;
+        }
+
+        .about-container p {
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .info-card {
             width: 90%;
+            padding: 20px;
+        }
+
+        .about-container h1 {
+            font-size: 1.8rem;
+        }
+
+        .about-container p {
+            font-size: 0.9rem;
+        }
+
+        .explore-btn {
+            font-size: 0.8rem;
+            padding: 8px 18px;
         }
     }
 </style>

@@ -182,10 +182,10 @@
 <body>
   <div class="top-bar">
     <a href="javascript:history.back()" class="back-button">Back</a>
-    <form class="search-container" method="GET" action="">
-      <input type="text" name="query" class="search-input" placeholder="Search for a watch..." required>
-      <button type="submit" class="search-button">Search</button>
-    </form>
+    <form method="get" action="{% url 'member_search' %}" class="search-container">
+        <input type="text" name="q" placeholder="Search by first or last name" value="{{ query }}" class="search-input">
+        <button type="submit" class="search-button">Search</button>
+      </form>
   </div>
   <h2 class="text-center mt-5 Products-names">Products</h2>
   <div class="cart-container container mt-5">

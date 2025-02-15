@@ -4,9 +4,10 @@ from django.contrib.auth import authenticate,login,logout,update_session_auth_ha
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import SetPasswordForm
-from .models import Watch,Cart,Customer_Detail,Order,OrderItem
+from .models import Watch,Cart,Customer_Detail,Order,OrderItem,ContactMessage
 from datetime import date
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 
 #===============For Paypal =========================
@@ -35,11 +36,8 @@ def register(request):
         reg = RegisterForm(request.POST)
         if reg.is_valid():
             reg.save()
-            messages.success(request, 'Registration Successful!!')
-            return redirect('login')  # Redirect after successful registration
-        else:
-            # If the form is not valid, the error messages will be passed to the template
-            messages.error(request, 'Please correct the errors below.')
+            messages.success(request, 'Registration Successful! 🎉')
+            return redirect('login')
     else:
         reg = RegisterForm()
 
@@ -73,20 +71,21 @@ def User_Profile(request):
     
     
 
+
 def User_Change_Password(request):
-    if request.user.is_authenticated:
-        if request.method == 'POST':
-            CP=PasswordChangeForm(user=request.user,data=request.POST)
-            if CP.is_valid():
-                CP.save()
-                update_session_auth_hash(request,CP.user)
-                messages.success(request,'Password Change SuccessFully')
-                return redirect('changePassword')
+    if request.method == 'POST':
+        CP = PasswordChangeForm(user=request.user, data=request.POST)
+        if CP.is_valid():
+            user = CP.save()
+            update_session_auth_hash(request, user)  # Prevents logout after password change
+            messages.success(request, 'Your password has been successfully updated!')
+            return redirect('Profile')  # Redirect to profile or any success page
         else:
-            CP=PasswordChangeForm(user=request.user)
-            return render(request,'core/ChangePasswordForm.html',{'CP':CP})
+            messages.error(request, 'Please correct the errors below.')
     else:
-        return redirect('login')
+        CP = PasswordChangeForm(user=request.user)
+
+    return render(request,'core/ChangePasswordForm.html',{'CP':CP})
 
 
 def User_Password_forgot_Form(request):
@@ -147,7 +146,7 @@ def view_To_Cart(request):
     if request.user.is_authenticated:
         watch_view=Cart.objects.filter(user=request.user)
         total=0
-        delivery_charges=3000
+        delivery_charges=300
         for viewcart in watch_view:
             total+=(viewcart.product.discounted_price*viewcart.quantity)
         final_price =total+delivery_charges
@@ -226,7 +225,6 @@ def Profile_edit(request):
                 UC = UserEditForm(request.POST,instance=request.user)
             if UC.is_valid():
                     UC.save()
-                    messages.success(request,'Data edit Successfully')
         else:
             if request.user.is_superuser == True:
                 UC=AdminEditForm(request.POST,instance=request.user)
@@ -247,40 +245,33 @@ def delete_Add(request,id):
 
 def Check_Out(request):
     if request.user.is_authenticated:
-        # Retrieve the cart items for the user
         watch_view = Cart.objects.filter(user=request.user)
         
         total = 0
-        delivery_charges = 3000
+        delivery_charges = 300
         
-        # Calculate the total price of the cart items
         for viewcart in watch_view:
             total += (viewcart.product.discounted_price * viewcart.quantity)
         
-        # Final price including delivery charges
         final_price = total + delivery_charges
         
-        # Retrieve the user's address details
         address = Customer_Detail.objects.filter(user=request.user)
-        
-        # If address doesn't exist for the user, redirect to the add address page
-        # if not address.exists():
-        #     return redirect('Address_Add')  # Replace 'Address_Add' with the actual URL name for adding address
-        
-        # If address exists, proceed with the checkout page rendering
         return render(request, 'core/checkout.html', {'total': total, 'final_price': final_price, 'address': address})
     
     else:
-        # Redirect to login page if the user is not authenticated
         return redirect('login')
     
 
 def Payment(request):
         if request.method == 'POST':
             selected_address_id = request.POST.get('selected_address')
+            
             if not selected_address_id:
-                messages.error(request, 'Please select an address to proceed.')
+                # If no address is selected, redirect to address add page
                 return redirect('Address_Add')
+            
+            
+
 
         watch_view=Cart.objects.filter(user=request.user)
         total=0
@@ -291,17 +282,17 @@ def Payment(request):
 
         #================= Paypal Code =====================
     
-        host = request.get_host()   # Will fecth the domain site is currently hosted on.
+        host = request.get_host()   
     
         paypal_checkout = {
-            'business': settings.PAYPAL_RECEIVER_EMAIL,   #This is typically the email address associated with the PayPal account that will receive the payment.
-            'amount': final_price,    #: The amount of money to be charged for the transaction. 
-            'item_name': 'Watch',       # Describes the item being purchased.
-            'invoice': uuid.uuid4(),  #A unique identifier for the invoice. It uses uuid.uuid4() to generate a random UUID.
+            'business': settings.PAYPAL_RECEIVER_EMAIL,  
+            'amount': final_price,   
+            'item_name': 'Watch',      
+            'invoice': uuid.uuid4(),  
             'currency_code': 'USD',
-            'notify_url': f"http://{host}{reverse('paypal-ipn')}",         #The URL where PayPal will send Instant Payment Notifications (IPN) to notify the merchant about payment-related events
-            'return_url': f"http://{host}{reverse('paymentsuccess',args=[selected_address_id])}",     #The URL where the customer will be redirected after a successful payment. 
-            'cancel_url': f"http://{host}{reverse('paymentfailed')}",      #The URL where the customer will be redirected if they choose to cancel the payment. 
+            'notify_url': f"http://{host}{reverse('paypal-ipn')}",        
+            'return_url': f"http://{host}{reverse('paymentsuccess',args=[selected_address_id])}",     
+            'cancel_url': f"http://{host}{reverse('paymentfailed')}",     
         }
 
         paypal_payment = PayPalPaymentsForm(initial=paypal_checkout)
@@ -314,10 +305,8 @@ def payment_success(request, selected_address_id):
     address_data = Customer_Detail.objects.get(pk=selected_address_id)
     cart_items = Cart.objects.filter(user=request.user)
 
-    # Create a single order
     order = Order.objects.create(user=user, customer=address_data)
 
-    # Add products to OrderItem and remove from cart
     for cart in cart_items:
         OrderItem.objects.create(order=order, watch=cart.product, quantity=cart.quantity)
         cart.delete()
@@ -331,15 +320,18 @@ def payment_failed(request):
 
 def User_order(request):
     current_date = date.today()
-    orders = Order.objects.filter(user=request.user).prefetch_related('items__watch')
-    for i in orders:
-        print(i.items.all())
+    
+    orders = Order.objects.prefetch_related("items__watch").filter(user=request.user)
+
+    for order in orders:
+        order.total = sum(item.watch.discounted_price * item.quantity for item in order.items.all())
+
     return render(request, 'core/Order.html', {'orders': orders, 'current_date': current_date})
 
 @login_required(login_url='login')
 def Buy_now(request, id):
     watch = Watch.objects.get(pk=id)    
-    delhivery_charge = 2000
+    delhivery_charge = 3000
     
     final_price = delhivery_charge + watch.discounted_price  
     
@@ -349,9 +341,8 @@ def Buy_now(request, id):
 
 
 def buynow_payment(request,id):
-
     if request.method == 'POST':
-        selected_address_id = request.POST.get('buynow_selected_address')
+        selected_address_id = request.POST.get('selected_address')
         if not selected_address_id:
                 messages.error(request, 'Please select an address to proceed.')
                 return redirect('Address_Add')
@@ -363,7 +354,7 @@ def buynow_payment(request,id):
     address = Customer_Detail.objects.filter(user=request.user)
     #================= Paypal Code ================================================
 
-    host = request.get_host()   # Will fecth the domain site is currently hosted on.
+    host = request.get_host()   
 
     paypal_checkout = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
@@ -411,7 +402,7 @@ def Forgot_pass(request):
                 [email],
                 fail_silently=False,
             )
-            return redirect('passwordresetdone')
+            messages.success(request, 'Password reset link has been sent to your email.')
         else:
             messages.success(request,'please enter valid email address')
     return render(request,"core/forgat_Password.html")
@@ -420,5 +411,54 @@ def password_reset_done(request):
     return render(request, 'core/Password_restart_Done.html')
 
 
-    
+def Support(request):
+    return render(request,'core/Support.html')
 
+
+def member_search(request):
+    query = request.GET.get('q')
+    if query:
+        watch = Watch.objects.filter(Q(name__icontains=query))
+    else:
+        watch = Watch.objects.all()
+   
+    context = {
+        'member': watch,
+        'query': query,
+    }
+    return render(request, 'core/member_search.html', context)
+
+def reset_password(request, uidb64, token):
+    if request.method == 'POST':
+        password = request.POST['password']
+        password2 = request.POST['password2']
+        if password == password2:
+            try:
+                uid = force_str(urlsafe_base64_decode(uidb64))
+                user = User.objects.get(pk=uid)
+                if default_token_generator.check_token(user, token):
+                    user.set_password(password)
+                    user.save()
+                    return redirect('passwordresetdone')
+                else:
+                    return HttpResponse('Token is invalid', status=400)
+            except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+                return HttpResponse('Invalid link', status=400)
+        else:
+            return HttpResponse('Passwords do not match', status=400)
+    return render(request, 'core/reset_password.html')
+
+def password_reset_done(request):
+    return render(request, 'core/password_reset_done.html')
+
+
+def contact_us(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        contact_message = ContactMessage(name=name, email=email, message=message)
+        contact_message.save()
+        messages.success(request, 'Your message has been sent successfully.')
+        
+    return render(request, 'core/contact_us.html')

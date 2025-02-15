@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+    {% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
     <!-- Bootstrap CSS for styling -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="{% static 'core/imgs/android-chrome-192x192.png' %}" type="image/png">
     <style>
         body {
             background-color: #121212;
@@ -143,8 +145,8 @@
 <body>
     <!-- Navigation Buttons -->
     <div class="navigation-buttons">
-        <a href="">Home</a>
-        <a href="">Back</a>
+        <a href="{% url "base" %}">Home</a>
+        <a href="javascript:history.back()">Back</a>
     </div>
 
     <!-- Checkout Container -->
@@ -174,15 +176,15 @@
             <table>
                 <tr>
                     <td>Subtotal</td>
-                    <td>₹{{ total }}</td>
+                    <td>&#36;{{ total }}</td>
                 </tr>
                 <tr>
                     <td>Delivery Charges</td>
-                    <td>₹3000</td>
+                    <td>&#36;300</td>
                 </tr>
                 <tr>
                     <td><strong>Total</strong></td>
-                    <td class="final-price">₹{{ final_price }}</td>
+                    <td class="final-price">&#36;{{ final_price }}</td>
                 </tr>
             </table>
         </div>

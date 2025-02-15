@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Watch,Cart,Customer_Detail,Order,OrderItem
+from .models import Watch,Cart,Customer_Detail,Order,OrderItem,ContactMessage
 
 
 
@@ -19,16 +19,23 @@ class DetailsAdmin(admin.ModelAdmin):
 
 class OrderItemInline(admin.TabularInline):  
     model = OrderItem
-    extra = 1  # Number of empty OrderItem rows shown in the admin panel
+    extra = 1  
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'customer', 'order_at', 'status')  # Removed Watchs and quantity
+    list_display = ('id', 'user', 'customer', 'order_at', 'status')  
     list_filter = ('status', 'order_at')
     search_fields = ('user__username', 'customer__name')
-    inlines = [OrderItemInline]  # Show OrderItems inside Order
+    inlines = [OrderItemInline] 
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
     list_display = ('order', 'watch', 'quantity')
     search_fields = ('order__id', 'watch__name')
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'message', 'created_at')  
+    list_filter = ('created_at',) 
+    search_fields = ('name', 'email', 'message')  
+    ordering = ('-created_at',)  

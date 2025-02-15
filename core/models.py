@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 import re
 
-# Create your models here.
 
 
 class Watch(models.Model):
@@ -19,8 +18,6 @@ class Watch(models.Model):
     original_price = models.IntegerField()
     discounted_price = models.IntegerField()
     watch_image = models.ImageField(upload_to='watch_images', null=True, blank=True)
-    watch_image_2 = models.ImageField(upload_to='watch_images', null=True, blank=True)
-    watch_image_3 = models.ImageField(upload_to='watch_images', null=True, blank=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='Luxury')
 
     def __str__(self):
@@ -88,11 +85,9 @@ class Customer_Detail(models.Model):
     pincode = models.IntegerField(default=0, blank=True, null=True)
 
     def clean(self):
-        # Custom validation for the city to allow only letters and spaces
         if not re.match(r'^[a-zA-Z\s]*$', self.city):
             raise ValidationError("City name should only contain letters and spaces.")
 
-        # Custom validation for pincode to ensure it is greater than 0
         if self.pincode is not None and self.pincode <= 0:
             raise ValidationError("Pincode should be greater than 0.")
 
@@ -123,3 +118,12 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.watch.name} (x{self.quantity})"
+    
+class ContactMessage(models.Model):
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Message from {self.name} ({self.email})"

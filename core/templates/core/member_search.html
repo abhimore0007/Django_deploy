@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Search</title>
+    <link rel="icon" href="{% static 'core/imgs/android-chrome-192x192.png' %}" type="image/png">
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Removes horizontal scrollbar */
+        }
+
+        .container {
+            margin: 20px;
+            padding-bottom: 50px; /* Adds space for footer */
+        }
+
+        h1, h2 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type="text"] {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            width: 250px;
+            max-width: 100%;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #ff5722;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-container button:hover {
+            background-color: #e64a19;
+        }
+
+        .search-results ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .search-results li {
+            background-color: #1e1e1e;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .search-results li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-results img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-right: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .search-results img:hover {
+            transform: scale(1.05);
+        }
+
+        .search-results .item-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .item-details strong {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .item-details p {
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        footer {
+            background-color: #121212;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: relative;
+            width: 100%;
+            bottom: 0;
+            font-size: 14px;
+        }
+
+        /* Back Button Style */
+        .back-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 600px) {
+            .search-results li {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .search-results img {
+                max-width: 100%;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .search-container {
+                justify-content: center;
+            }
+
+            .search-container input[type="text"] {
+                width: 200px;
+            }
+
+            .item-details strong {
+                font-size: 16px;
+            }
+
+            .item-details p {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <button class="back-button" onclick="window.history.back()">Go Back</button>
+
+        <div class="search-container">
+            <!-- Search Form -->
+            <form method="get" action="{% url 'member_search' %}">
+                <input type="text" name="q" placeholder="Search by watch name" value="{{ query }}">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <!-- Search Results -->
+        {% if member %}
+            <h2>Search Results</h2>
+            <div class="search-results">
+                <ul>
+                    {% for item in member %}
+                        <li>
+                            <!-- Wrap the product in an anchor tag for redirection -->
+                            <a href="{% url 'watchdetails' item.id %}" style="text-decoration: none; color: inherit;">
+                                <!-- Display Watch Image if available -->
+                                {% if item.watch_image %}
+                                    <img src="{{ item.watch_image.url }}" alt="{{ item.name }}">
+                                {% else %}
+                                    <p>No image available</p>
+                                {% endif %}
+                                
+                                <div class="item-details">
+                                    <strong>{{ item.name }}</strong>
+                                    <p>{{ item.description }}</p>
+                                    <p>Price: Discounted: {{ item.discounted_price }}</p>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% else %}
+            <p>No watches found.</p>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Your Company</p>
+    </footer>
+</body>
+</html>

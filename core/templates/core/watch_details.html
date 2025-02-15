@@ -203,13 +203,6 @@
     <a href="javascript:history.back()" class="back-button">Back</a>
 
     <div class="container-fluid">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }}" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
         <div class="product-card">
             <div class="product-image">
                 <img src="{{ watch_details.watch_image.url }}" alt="{{ watch_details.name }}">
@@ -221,7 +214,7 @@
                     <div class="product-description">{{ watch_details.small_description }}</div>
                 </div>
                 <div>
-                    <div class="product-price">&#8377 {{ watch_details.discounted_price }}</div>
+                    <div class="product-price">&#36; {{ watch_details.discounted_price }}</div>
                     <div class="button-container">
                         <a class="button" href="{% url 'AddToCart' watch_details.id %}">Add to Cart</a>
                         <a class="button" href="{% url 'Buy_now' watch_details.id %}">Buy Now</a>

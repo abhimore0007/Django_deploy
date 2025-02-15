@@ -35,7 +35,12 @@ urlpatterns = [
     path('Order_Page/',views.User_order,name="Order"),
     path('About_Us/',views.About_us,name="About"),
     path('Forgot_Pass/',views.Forgot_pass,name="Forgot_pass"),
-    path('password_reset_done/', views.password_reset_done, name='passwordresetdone'),   
+    path('password_reset_done/', views.password_reset_done, name='passwordresetdone'),
+    path('Support/', views.Support, name='Support'),     
+    path('search', views.member_search, name='member_search'), 
+    path('reset_password/<uidb64>/<token>/', views.reset_password, name='resetpassword'),
+    path('password_reset_done/', views.password_reset_done, name='passwordresetdone'),
+    path('contact-us/', views.contact_us, name='contact_us'),
    
 ]
 

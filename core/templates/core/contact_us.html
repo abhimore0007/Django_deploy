@@ -1,0 +1,98 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #fff;
+    }
+
+    .contact-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: #1c1c1c;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    .contact-header {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #f39c12;
+    }
+
+    .contact-form input, .contact-form textarea {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        background-color: #333;
+        border: none;
+        border-radius: 6px;
+        color: white;
+    }
+
+    .contact-form button {
+        width: 100%;
+        padding: 12px;
+        background-color: #f39c12;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .contact-form button:hover {
+        background-color: #e67e22;
+    }
+
+    .footer {
+        text-align: center;
+        color: #777;
+        margin-top: 40px;
+    }
+
+    .alert {
+        color: #28a745;
+        background-color: #e2f7e2;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<div class="contact-container">
+    <h1 class="contact-header">Contact Us</h1>
+
+    {% if messages %}
+        <div class="alert">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" class="contact-form">
+        {% csrf_token %}
+        
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+        
+        <label for="email">Your Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        
+        <label for="message">Your Message</label>
+        <textarea id="message" name="message" placeholder="Write your message here..." rows="5" required></textarea>
+        
+        <button type="submit">Send Message</button>
+    </form>
+</div>
+
+<div class="footer">
+    <p>&copy; 2024 Your Company. All Rights Reserved.</p>
+</div>
+
+{% endblock content %}

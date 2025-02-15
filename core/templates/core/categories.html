@@ -7,6 +7,7 @@
   <title>Luxury Watch Collection</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" href="{% static 'core/imgs/android-chrome-192x192.png' %}" type="image/png">
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -45,34 +46,48 @@
 
     .search-container {
       display: flex;
-      flex: 1;
-      max-width: 500px;
-      margin: 0 10px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
     }
 
     .search-input {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 5px 0 0 5px;
+      padding: 12px 20px;
+      border: 2px solid #f39c12;
+      border-radius: 30px 0 0 30px;
       outline: none;
       font-size: 1rem;
       background-color: #333;
       color: white;
+      width: 250px;
+      transition: border-color 0.3s;
+    }
+
+    .search-input:focus {
+      border-color: #e67e22;
     }
 
     .search-button {
       background-color: #f39c12;
       color: white;
-      border: none;
+      border: 1px solid #f39c12;
       padding: 12px 18px;
-      border-radius: 0 5px 5px 0;
+      border-radius: 0 30px 30px 0;
       cursor: pointer;
       transition: background-color 0.3s ease-in-out;
+      font-size: 1rem;
     }
 
     .search-button:hover {
       background-color: #e67e22;
+    }
+
+    .search-bar-wrapper {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
     }
 
     .container {
@@ -189,6 +204,18 @@
 
       .search-container {
         margin: 10px 0;
+        flex-direction: column;
+      }
+
+      .search-input {
+        width: 100%;
+        margin-bottom: 10px;
+        border-radius: 5px;
+      }
+
+      .search-button {
+        width: 100%;
+        border-radius: 5px;
       }
     }
 
@@ -199,21 +226,6 @@
 
       .glassBox__imgBox img {
         max-height: 200px;
-      }
-
-      .search-container {
-        flex-direction: column;
-        align-items: stretch;
-        margin: 10px 0;
-      }
-
-      .search-input {
-        border-radius: 5px;
-        margin-bottom: 10px;
-      }
-
-      .search-button {
-        border-radius: 5px;
       }
 
       .top-bar {
@@ -235,11 +247,16 @@
 <body>
   <div class="top-bar">
     <a href="javascript:history.back()" class="back-button">Back</a>
-    <form class="search-container" method="GET" action="">
-      <input type="text" name="query" class="search-input" placeholder="Search for a watch..." required>
-      <button type="submit" class="search-button">Search</button>
-    </form>
+    
+    <!-- Search Form -->
+    <div class="search-bar-wrapper">
+      <form method="get" action="{% url 'member_search' %}" class="search-container">
+        <input type="text" name="q" placeholder="Search by first or last name" value="{{ query }}" class="search-input">
+        <button type="submit" class="search-button">Search</button>
+      </form>
+    </div>
   </div>
+
   <div class="container mt-4">
     <h2 class="category-names">Category</h2>
     <div class="row">
@@ -269,6 +286,7 @@
       </div>
     </div>
   </div>
+  
   <h2 class="text-center mt-5 Products-names">Products</h2>
   <div class="cart-container container mt-5">
     <div class="row d-flex justify-content-center">
