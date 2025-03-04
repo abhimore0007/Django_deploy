@@ -1,0 +1,237 @@
+/* General Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  height: 100%;
+  width: 100%;
+}
+
+/* Hero Section */
+.first-hero-text {
+  background-color: black;
+  color: white;
+  padding: 20px;
+}
+
+#HeroTitle {
+  font-size: 3.4rem;
+}
+
+#HeroTitle span {
+  color: rgb(205, 104, 33);
+}
+
+.first-hero-img {
+  height: auto;
+  max-width: 100%;
+}
+
+/* Button Styles */
+.custom-btn {
+  background-color: #f0ad4e;
+  color: black;
+  border: 2px solid #f0ad4e;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.custom-btn:hover {
+  background-color: black;
+  color: #f0ad4e;
+  border-color: #f0ad4e;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Second Hero Section */
+.second-hero {
+  padding: 90px 0 100px; /* Reduced bottom padding */
+  background-color: black;
+}
+
+/* Video Section */
+.video-section {
+  background-color: black;
+  padding: 10px 0;
+}
+
+.video-section video {
+  width: 100%;
+  height: auto;
+}
+
+/* Photo Carousel */
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 95vh;
+  background-color: black;
+  flex-direction: column;
+  width: 100%;
+}
+
+.slider-heading {
+  color: white;
+  font-size: 2.5rem;
+  font-weight: bolder;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.slider {
+  height: 330px;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+  width: 80%;
+}
+
+.slider .slide-track {
+  animation: scroll 30s linear infinite;
+  display: flex;
+  width: calc(250px * 14);
+}
+
+.slider .slide {
+  height: 300px;
+  width: 450px;
+  margin-right: 20px;
+}
+
+.slider .slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #bbb;
+}
+
+/* Scrolling Animation */
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-250px * 7)); }
+}
+
+/* Services Section */
+.bsb-service-7 {
+  border-radius: 30px;
+  padding-bottom: 70px;
+}
+
+.service-title {
+  color: white;
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.service-container {
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 30px;
+  background-color: black;
+  padding: 20px;
+}
+
+.card {
+  background: transparent;
+  border: none;
+}
+
+.card-body {
+  padding: 40px 20px;
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.card-text {
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+.icon {
+  font-size: 56px;
+  color: #ffc107;
+  margin-bottom: 20px;
+}
+
+/* Footer */
+footer {
+  background-color: black;
+  color: white;
+  padding: 20px 0;
+}
+
+footer h6 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+footer p, footer a {
+  color: #dcdcdc;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #f4c10f;
+}
+
+.btn-floating {
+  background-color: #f4c10f;
+  color: black;
+  border: none;
+}
+
+.btn-floating:hover {
+  background-color: white;
+  color: black;
+}
+
+hr {
+  border-top: 1px solid #444;
+  margin: 20px 0;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .service-title {
+    font-size: 2.5rem;
+  }
+
+  .service-container {
+    padding: 15px 0;
+  }
+
+  .card-body {
+    padding: 30px 15px;
+  }
+
+  .slider {
+    height: 250px;
+  }
+
+  .slider .slide {
+    height: 220px;
+  }
+
+  footer h6 {
+    font-size: 1rem;
+  }
+
+  footer p {
+    font-size: 0.8rem;
+  }
+}
