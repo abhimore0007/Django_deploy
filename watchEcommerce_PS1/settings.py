@@ -127,7 +127,14 @@ DEFAULT_FROM_EMAIL = 'abhishekmore504@gmail.com'  # Your Gmail address (or a ver
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = '/static/'
+import os
+
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")  # Add this line
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),  # If you have a 'static' folder inside your app
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'  # ✅ Correct
