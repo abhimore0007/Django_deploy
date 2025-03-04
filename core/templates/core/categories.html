@@ -288,27 +288,34 @@
   </div>
   
   <h2 class="text-center mt-5 Products-names">Products</h2>
-  <div class="cart-container container mt-5">
-    <div class="row d-flex justify-content-center">
-      {% for watch in watch_cate %}
-        <div class="col-md-3 col-sm-6 mb-3" style="margin-top: 30px;">
-          <a href="{% url 'watchdetails' watch.id %}" class="text-decoration-none">
-            <div class="card glassBox">
-              <div class="card-body p-0">
-                <div class="glassBox__imgBox text-center">
-                  {% if watch.watch_image %}
-                    <img src="{{ watch.watch_image.url }}" alt="{{ watch.name }}" class="card-img-top" style="height: 300px; width: 300px;">
-                  {% else %}
-                    <img src="path_to_default_image.jpg" alt="Default Image" class="card-img-top">
-                  {% endif %}
-                  <h3 class="card-title">{{ watch.name }}</h3>
-                </div>
+<div class="cart-container container mt-5">
+  <div class="row d-flex justify-content-center">
+    {% for watch in watch_cate %}
+      <div class="col-md-3 col-sm-6 mb-3" style="margin-top: 30px;">
+        <a href="{% url 'watchdetails' watch.id %}" class="text-decoration-none">
+          <div class="card glassBox">
+            <div class="card-body p-0">
+              <div class="glassBox__imgBox text-center">
+                {% if watch.watch_image %}
+                  <img src="{{ watch.watch_image.url }}" alt="{{ watch.name }}" class="card-img-top" style="height: 300px; width: 300px;">
+                {% else %}
+                  <img src="path_to_default_image.jpg" alt="Default Image" class="card-img-top">
+                {% endif %}
+                <h3 class="card-title">{{ watch.name }}</h3>
               </div>
             </div>
-          </a>
-        </div>
-      {% endfor %}
-    </div>
+          </div>
+        </a>
+      </div>
+    {% endfor %}
   </div>
+</div>
+
+{% if not show_all %}
+  <div class="text-center mt-4">
+    <a href="?show_all=True" class="btn btn-warning">View More</a>
+  </div>
+{% endif %}
+
 </body>
 </html>

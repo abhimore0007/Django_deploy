@@ -211,7 +211,7 @@
             <div class="product-info">
                 <div>
                     <div class="product-name">{{ watch_details.name }}</div>
-                    <div class="product-description">{{ watch_details.small_description }}</div>
+                    <div class="product-description"><p><p>{{ watch_details.description|safe }}</p>                    </p>                    </div>
                 </div>
                 <div>
                     <div class="product-price">&#36; {{ watch_details.discounted_price }}</div>

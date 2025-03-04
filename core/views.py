@@ -105,8 +105,14 @@ def User_Password_forgot_Form(request):
     
 
 def main_categories(request):
-    watch_cate=Watch.objects.order_by("?")
-    return render(request,'core/categories.html',{'watch_cate':watch_cate})
+    show_all = request.GET.get('show_all', False)  # Check if 'show_all' is in the URL
+    if show_all:
+        watch_cate = Watch.objects.all()  # Show all watches
+    else:
+        watch_cate = Watch.objects.all()[:4]  # Show only 4 watches initially
+
+    return render(request, 'core/categories.html', {'watch_cate': watch_cate, 'show_all': show_all})
+
 
 def Sport_categories(request):
     watch_cate=Watch.objects.filter(category='Sport')
@@ -216,24 +222,18 @@ def Address_Add(request):
         address = Customer_Detail.objects.filter(user=request.user)
     return render(request,'core/Address_Add.html',{'add':add})
 
-def Profile_edit(request):
+def profile_edit(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            if request.user.is_superuser == True:
-                UC=AdminEditForm(request.POST,instance=request.user)
-            else:
-                UC = UserEditForm(request.POST,instance=request.user)
+            UC = UserEditForm(request.POST, instance=request.user)
             if UC.is_valid():
-                    UC.save()
+                UC.save()
         else:
-            if request.user.is_superuser == True:
-                UC=AdminEditForm(request.POST,instance=request.user)
-                user=User.objects.all()
-            else:
-                UC=UserEditForm(instance=request.user)
-        return render(request,'core/profile_Edit.html',{'UC':UC})
-    else:
-        return redirect('login')
+            UC = UserEditForm(instance=request.user)
+
+        return render(request, 'core/profile_Edit.html', {'UC': UC})
+    
+    return redirect('login')
    
          
 def delete_Add(request,id):
