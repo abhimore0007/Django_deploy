@@ -25,7 +25,15 @@ SECRET_KEY = 'django-insecure-3v07m2nx=0yefq6sl@lb*abc)v=ykte4+zv)*xxb(du&tu%ty^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+import os
+
+ALLOWED_HOSTS = [
+    "127.0.0.1",  # Allow localhost (for local development)
+    "django-deploy-17nn.onrender.com",  # Add your Render deployment URL
+]
+
+# Optional: Allow additional hosts from environment variables
+ALLOWED_HOSTS.extend(os.getenv("DJANGO_ALLOWED_HOSTS", "").split(","))
 
 
 # Application definition
